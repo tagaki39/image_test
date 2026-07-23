@@ -1,0 +1,2346 @@
+[
+  {
+    "case_name": "图片生成-文生图-必填参数齐全生成成功",
+    "source_csv_row": 2,
+    "csv_status": "未通过",
+    "test_type": "basic_smoke",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "",
+    "help": "基础冒烟，已由现有 test_generate_image_success 覆盖"
+  },
+  {
+    "case_name": "图片生成-文生图-切换不同模型分别生成",
+    "source_csv_row": 3,
+    "csv_status": "未通过",
+    "test_type": "switch_models_generation",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "需遍历所有可用模型分别生成",
+    "help": "遍历所有可用模型各生成一次，验证均可成功"
+  },
+  {
+    "case_name": "图片生成-图生图-本地上传参考图生成",
+    "source_csv_row": 4,
+    "csv_status": "已通过",
+    "test_type": "upload_reference_generation",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "genType": 2,
+      "inputFile": "<需提供本地上传的参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "上传本地参考图生成，验证图生图流程"
+  },
+  {
+    "case_name": "图片生成-参考图-从项目选择素材",
+    "source_csv_row": 5,
+    "csv_status": "已通过",
+    "test_type": "ui_only",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": false,
+    "expected_success": null,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "需要浏览项目素材库 UI",
+    "help": ""
+  },
+  {
+    "case_name": "图片生成-参考图-从项目移动选择素材",
+    "source_csv_row": 6,
+    "csv_status": "已通过",
+    "test_type": "ui_only",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": false,
+    "expected_success": null,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "需要拖拽/移动 UI 交互",
+    "help": ""
+  },
+  {
+    "case_name": "图片生成-参考图-删除已有参考图",
+    "source_csv_row": 7,
+    "csv_status": "已通过",
+    "test_type": "ui_only",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": false,
+    "expected_success": null,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "需要鼠标悬停+点击删除按钮",
+    "help": ""
+  },
+  {
+    "case_name": "图片生成-参考图-替换已有参考图",
+    "source_csv_row": 8,
+    "csv_status": "已通过",
+    "test_type": "ui_only",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": false,
+    "expected_success": null,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "需要点击替换按钮+选择来源",
+    "help": ""
+  },
+  {
+    "case_name": "图片生成-参考图-放大已有参考图",
+    "source_csv_row": 9,
+    "csv_status": "已通过",
+    "test_type": "ui_only",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": false,
+    "expected_success": null,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "需要弹窗/大图展示",
+    "help": ""
+  },
+  {
+    "case_name": "图片生成-参考图-调整已有参考图位置",
+    "source_csv_row": 10,
+    "csv_status": "已通过",
+    "test_type": "ui_only",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": false,
+    "expected_success": null,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "需要拖拽排序",
+    "help": ""
+  },
+  {
+    "case_name": "图片生成-提示词-@参考图",
+    "source_csv_row": 11,
+    "csv_status": "未通过",
+    "test_type": "ui_only",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": false,
+    "expected_success": null,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "需要在提示词输入框中 @ 选中参考图",
+    "help": ""
+  },
+  {
+    "case_name": "图片生成-提示词-AI优化",
+    "source_csv_row": 12,
+    "csv_status": "未通过",
+    "test_type": "ui_only",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": false,
+    "expected_success": null,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "AI 优化按钮交互，提示词转换逻辑",
+    "help": ""
+  },
+  {
+    "case_name": "图片生成-模板库-选择模板填充",
+    "source_csv_row": 13,
+    "csv_status": "已通过",
+    "test_type": "ui_only",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": false,
+    "expected_success": null,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "UI 模板选择+表单回填",
+    "help": ""
+  },
+  {
+    "case_name": "图片生成-画质/数量/温度等模型特有控件",
+    "source_csv_row": 14,
+    "csv_status": "未通过",
+    "test_type": "ui_only",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": false,
+    "expected_success": null,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "UI 控件渲染验证",
+    "help": ""
+  },
+  {
+    "case_name": "图片生成-生成结果-查看详情/应用参数/复制提示词/下载/应用到视频生成/应用图片",
+    "source_csv_row": 15,
+    "csv_status": "执行中",
+    "test_type": "ui_only",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": false,
+    "expected_success": null,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "弹窗/抽屉 UI 展示",
+    "help": ""
+  },
+  {
+    "case_name": "图片生成-生成结果-多条件筛选/重置/刷新/分页",
+    "source_csv_row": 16,
+    "csv_status": "执行中",
+    "test_type": "ui_only",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": false,
+    "expected_success": null,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "UI 筛选/分页/刷新",
+    "help": ""
+  },
+  {
+    "case_name": "图片生成-积分-生成后正确扣减并展示余额",
+    "source_csv_row": 17,
+    "csv_status": "执行中",
+    "test_type": "ui_only",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": false,
+    "expected_success": null,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "UI 积分余额同步显示",
+    "help": ""
+  },
+  {
+    "case_name": "图片生成-重置参数",
+    "source_csv_row": 18,
+    "csv_status": "执行中",
+    "test_type": "ui_only",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": false,
+    "expected_success": null,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "表单重置 UI 行为",
+    "help": ""
+  },
+  {
+    "case_name": "图片生成-未输入提示词触发生成",
+    "source_csv_row": 19,
+    "csv_status": "执行中",
+    "test_type": "empty_prompt",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "prompt": ""
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "prompt 置空，预期被拦截（按钮置灰或提交被拒）"
+  },
+  {
+    "case_name": "图片生成-未选择模型触发生成",
+    "source_csv_row": 20,
+    "csv_status": "执行中",
+    "test_type": "no_model_selected",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "model": ""
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "model 置空，预期使用默认模型或被拦截"
+  },
+  {
+    "case_name": "图片生成-未选择项目分类触发生成",
+    "source_csv_row": 21,
+    "csv_status": "执行中",
+    "test_type": "no_project_category",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "projectId": "",
+      "categoryId": ""
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "projectId/categoryId 置空，预期提示必选"
+  },
+  {
+    "case_name": "图片生成-提示词仅空格/无意义字符",
+    "source_csv_row": 22,
+    "csv_status": "执行中",
+    "test_type": "whitespace_prompt",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "prompt": "   "
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "prompt 仅填空格，预期被校验拦截"
+  },
+  {
+    "case_name": "图片生成-积分不足时生成",
+    "source_csv_row": 23,
+    "csv_status": "执行中",
+    "test_type": "insufficient_credits",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {},
+    "need_special_account": true,
+    "notes": "需使用积分不足的测试账号",
+    "help": "用积分不足的账号发起生成，预期提示积分不足，不扣费"
+  },
+  {
+    "case_name": "图片生成-模型调用失败的处理",
+    "source_csv_row": 24,
+    "csv_status": "执行中",
+    "test_type": "ui_only",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": false,
+    "expected_success": null,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "需要 mock 模型故障",
+    "help": ""
+  },
+  {
+    "case_name": "图片生成-生成过程中网络异常",
+    "source_csv_row": 25,
+    "csv_status": "执行中",
+    "test_type": "ui_only",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": false,
+    "expected_success": null,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "需要模拟网络中断",
+    "help": ""
+  },
+  {
+    "case_name": "图片生成-联网搜索-支持模型开关验证",
+    "source_csv_row": 26,
+    "csv_status": "执行中",
+    "test_type": "search_switch_verify",
+    "model_display": "图片生成",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "需确认联网搜索对应的 API 字段名",
+    "help": "对支持联网搜索的模型验证开关可用"
+  },
+  {
+    "case_name": "图片生成-联网搜索-不支持模型无开关",
+    "source_csv_row": 27,
+    "csv_status": "执行中",
+    "test_type": "search_switch_hidden",
+    "model_display": "图片生成",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "需确认联网搜索对应的 API 字段名",
+    "help": "对不支持联网搜索的模型验证开关不出现"
+  },
+  {
+    "case_name": "GPT Image 2-1（第三方）-预置尺寸选择与生成",
+    "source_csv_row": 28,
+    "csv_status": "执行中",
+    "test_type": "preset_size_generation",
+    "model_display": "GPT Image 2-1（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "",
+    "help": "选择预置尺寸，GPT Image 2-1（第三方），预期生成成功且尺寸与所选一致"
+  },
+  {
+    "case_name": "GPT Image 2-1（第三方）-提示词达上限2000字符",
+    "source_csv_row": 29,
+    "csv_status": "执行中",
+    "test_type": "prompt_at_limit",
+    "model_display": "GPT Image 2-1（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "prompt": "<需构造恰好2000个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造恰好 2000 字符的 prompt，预期提交成功并正常生成"
+  },
+  {
+    "case_name": "GPT Image 2-1（第三方）-提示词超过2000字符",
+    "source_csv_row": 30,
+    "csv_status": "执行中",
+    "test_type": "prompt_exceeds_limit",
+    "model_display": "GPT Image 2-1（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "prompt": "<需构造2010个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造 2010 字符的 prompt，发送请求，预期被拦截（code != 200 或异步失败）"
+  },
+  {
+    "case_name": "GPT Image 2-1（第三方）-参考图达上限16张",
+    "source_csv_row": 31,
+    "csv_status": "执行中",
+    "test_type": "reference_count_at_limit",
+    "model_display": "GPT Image 2-1（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "inputFile": "<需提供恰好16张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名",
+    "help": "提供恰好 16 张参考图 URL，预期提交成功"
+  },
+  {
+    "case_name": "GPT Image 2-1（第三方）-参考图超过16张",
+    "source_csv_row": 32,
+    "csv_status": "执行中",
+    "test_type": "reference_count_exceeds",
+    "model_display": "GPT Image 2-1（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供17张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名（inputFile 数组？）",
+    "help": "提供 17 张参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "GPT Image 2-1（第三方）-参考图单张超过10M",
+    "source_csv_row": 33,
+    "csv_status": "执行中",
+    "test_type": "reference_size_exceeds",
+    "model_display": "GPT Image 2-1（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供>10MB 的参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "需准备超大参考图 URL",
+    "help": "提供 >10MB 的参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "GPT Image 2-1（第三方）-参考图不支持格式",
+    "source_csv_row": 34,
+    "csv_status": "执行中",
+    "test_type": "reference_unsupported_format",
+    "model_display": "GPT Image 2-1（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供非JPEG/PNG/WEBP格式图片URL>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "提供 BMP/TIFF/GIF 等非支持格式图片 URL，预期被拦截"
+  },
+  {
+    "case_name": "GPT Image 2-1（第三方）-自定义尺寸越界",
+    "source_csv_row": 35,
+    "csv_status": "执行中",
+    "test_type": "custom_dimension_out_of_bounds",
+    "model_display": "GPT Image 2-1（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "imageSize": "<需填入越界尺寸>"
+    },
+    "need_special_account": false,
+    "notes": "需确认该模型的自定义尺寸约束规则",
+    "help": "填入超过模型允许范围的自定义宽高，预期被拦截"
+  },
+  {
+    "case_name": "GPT Image 2-2（第三方）-提示词达上限2000字符",
+    "source_csv_row": 36,
+    "csv_status": "执行中",
+    "test_type": "prompt_at_limit",
+    "model_display": "GPT Image 2-2（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "prompt": "<需构造恰好2000个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造恰好 2000 字符的 prompt，预期提交成功并正常生成"
+  },
+  {
+    "case_name": "GPT Image 2-2（第三方）-提示词超过2000字符",
+    "source_csv_row": 37,
+    "csv_status": "执行中",
+    "test_type": "prompt_exceeds_limit",
+    "model_display": "GPT Image 2-2（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "prompt": "<需构造2010个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造 2010 字符的 prompt，发送请求，预期被拦截（code != 200 或异步失败）"
+  },
+  {
+    "case_name": "GPT Image 2-2（第三方）-参考图达上限10张",
+    "source_csv_row": 38,
+    "csv_status": "执行中",
+    "test_type": "reference_count_at_limit",
+    "model_display": "GPT Image 2-2（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "inputFile": "<需提供恰好10张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名",
+    "help": "提供恰好 10 张参考图 URL，预期提交成功"
+  },
+  {
+    "case_name": "GPT Image 2-2（第三方）-参考图超过10张",
+    "source_csv_row": 39,
+    "csv_status": "执行中",
+    "test_type": "reference_count_exceeds",
+    "model_display": "GPT Image 2-2（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供11张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名（inputFile 数组？）",
+    "help": "提供 11 张参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "GPT Image 2-2（第三方）-参考图单张超过50M",
+    "source_csv_row": 40,
+    "csv_status": "执行中",
+    "test_type": "reference_size_exceeds",
+    "model_display": "GPT Image 2-2（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供>10MB 的参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "需准备超大参考图 URL",
+    "help": "提供 >10MB 的参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "GPT Image 2-2（第三方）-参考图不支持格式",
+    "source_csv_row": 41,
+    "csv_status": "执行中",
+    "test_type": "reference_unsupported_format",
+    "model_display": "GPT Image 2-2（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供非JPEG/PNG/WEBP格式图片URL>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "提供 BMP/TIFF/GIF 等非支持格式图片 URL，预期被拦截"
+  },
+  {
+    "case_name": "GPT Image 2-2（第三方）-参考图比例/像素越界",
+    "source_csv_row": 42,
+    "csv_status": "执行中",
+    "test_type": "reference_aspect_ratio_violation",
+    "model_display": "GPT Image 2-2（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供违反比例/像素约束的参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "需确认该模型的比例约束规则",
+    "help": "提供违反宽高比/像素约束的参考图，预期被拦截"
+  },
+  {
+    "case_name": "GPT Image 2-2（第三方）-尺寸/比例/数量经提示词控制",
+    "source_csv_row": 43,
+    "csv_status": "执行中",
+    "test_type": "ui_only",
+    "model_display": null,
+    "model_internal": null,
+    "auto_applicable": false,
+    "expected_success": null,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "提示词语义控制，非结构化参数",
+    "help": ""
+  },
+  {
+    "case_name": "GPT Image 2-3（第三方）-预置尺寸选择与生成",
+    "source_csv_row": 44,
+    "csv_status": "执行中",
+    "test_type": "preset_size_generation",
+    "model_display": "GPT Image 2-3（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "",
+    "help": "选择预置尺寸，GPT Image 2-3（第三方），预期生成成功且尺寸与所选一致"
+  },
+  {
+    "case_name": "GPT Image 2-3（第三方）-提示词达上限2000字符",
+    "source_csv_row": 45,
+    "csv_status": "执行中",
+    "test_type": "prompt_at_limit",
+    "model_display": "GPT Image 2-3（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "prompt": "<需构造恰好2000个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造恰好 2000 字符的 prompt，预期提交成功并正常生成"
+  },
+  {
+    "case_name": "GPT Image 2-3（第三方）-提示词超过2000字符",
+    "source_csv_row": 46,
+    "csv_status": "执行中",
+    "test_type": "prompt_exceeds_limit",
+    "model_display": "GPT Image 2-3（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "prompt": "<需构造2010个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造 2010 字符的 prompt，发送请求，预期被拦截（code != 200 或异步失败）"
+  },
+  {
+    "case_name": "GPT Image 2-3（第三方）-参考图达上限16张",
+    "source_csv_row": 47,
+    "csv_status": "执行中",
+    "test_type": "reference_count_at_limit",
+    "model_display": "GPT Image 2-3（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "inputFile": "<需提供恰好16张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名",
+    "help": "提供恰好 16 张参考图 URL，预期提交成功"
+  },
+  {
+    "case_name": "GPT Image 2-3（第三方）-参考图超过16张",
+    "source_csv_row": 48,
+    "csv_status": "执行中",
+    "test_type": "reference_count_exceeds",
+    "model_display": "GPT Image 2-3（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供17张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名（inputFile 数组？）",
+    "help": "提供 17 张参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "GPT Image 2-3（第三方）-参考图单张超过10M",
+    "source_csv_row": 49,
+    "csv_status": "执行中",
+    "test_type": "reference_size_exceeds",
+    "model_display": "GPT Image 2-3（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供>10MB 的参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "需准备超大参考图 URL",
+    "help": "提供 >10MB 的参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "GPT Image 2-3（第三方）-参考图不支持格式",
+    "source_csv_row": 50,
+    "csv_status": "执行中",
+    "test_type": "reference_unsupported_format",
+    "model_display": "GPT Image 2-3（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供非JPEG/PNG/WEBP格式图片URL>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "提供 BMP/TIFF/GIF 等非支持格式图片 URL，预期被拦截"
+  },
+  {
+    "case_name": "GPT Image 2-3（第三方）-自定义尺寸越界",
+    "source_csv_row": 51,
+    "csv_status": "执行中",
+    "test_type": "custom_dimension_out_of_bounds",
+    "model_display": "GPT Image 2-3（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "imageSize": "<需填入越界尺寸>"
+    },
+    "need_special_account": false,
+    "notes": "需确认该模型的自定义尺寸约束规则",
+    "help": "填入超过模型允许范围的自定义宽高，预期被拦截"
+  },
+  {
+    "case_name": "GPT Image 2（官方）-预置尺寸选择与生成",
+    "source_csv_row": 52,
+    "csv_status": "执行中",
+    "test_type": "preset_size_generation",
+    "model_display": "GPT Image 2（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "",
+    "help": "选择预置尺寸，GPT Image 2（官方），预期生成成功且尺寸与所选一致"
+  },
+  {
+    "case_name": "GPT Image 2（官方）-提示词达上限2000字符",
+    "source_csv_row": 53,
+    "csv_status": "执行中",
+    "test_type": "prompt_at_limit",
+    "model_display": "GPT Image 2（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "prompt": "<需构造恰好2000个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造恰好 2000 字符的 prompt，预期提交成功并正常生成"
+  },
+  {
+    "case_name": "GPT Image 2（官方）-提示词超过2000字符",
+    "source_csv_row": 54,
+    "csv_status": "执行中",
+    "test_type": "prompt_exceeds_limit",
+    "model_display": "GPT Image 2（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "prompt": "<需构造2010个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造 2010 字符的 prompt，发送请求，预期被拦截（code != 200 或异步失败）"
+  },
+  {
+    "case_name": "GPT Image 2（官方）-参考图达上限10张",
+    "source_csv_row": 55,
+    "csv_status": "执行中",
+    "test_type": "reference_count_at_limit",
+    "model_display": "GPT Image 2（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "inputFile": "<需提供恰好10张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名",
+    "help": "提供恰好 10 张参考图 URL，预期提交成功"
+  },
+  {
+    "case_name": "GPT Image 2（官方）-参考图超过10张",
+    "source_csv_row": 56,
+    "csv_status": "执行中",
+    "test_type": "reference_count_exceeds",
+    "model_display": "GPT Image 2（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供11张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名（inputFile 数组？）",
+    "help": "提供 11 张参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "GPT Image 2（官方）-参考图单张超过50M",
+    "source_csv_row": 57,
+    "csv_status": "执行中",
+    "test_type": "reference_size_exceeds",
+    "model_display": "GPT Image 2（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供>10MB 的参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "需准备超大参考图 URL",
+    "help": "提供 >10MB 的参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "GPT Image 2（官方）-参考图不支持格式",
+    "source_csv_row": 58,
+    "csv_status": "执行中",
+    "test_type": "reference_unsupported_format",
+    "model_display": "GPT Image 2（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供非JPEG/PNG/WEBP格式图片URL>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "提供 BMP/TIFF/GIF 等非支持格式图片 URL，预期被拦截"
+  },
+  {
+    "case_name": "GPT Image 2（官方）-自定义尺寸越界",
+    "source_csv_row": 59,
+    "csv_status": "执行中",
+    "test_type": "custom_dimension_out_of_bounds",
+    "model_display": "GPT Image 2（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "imageSize": "<需填入越界尺寸>"
+    },
+    "need_special_account": false,
+    "notes": "需确认该模型的自定义尺寸约束规则",
+    "help": "填入超过模型允许范围的自定义宽高，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 5.0（海外）-预置尺寸选择与生成",
+    "source_csv_row": 60,
+    "csv_status": "执行中",
+    "test_type": "preset_size_generation",
+    "model_display": "Seedream 5.0（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "",
+    "help": "选择预置尺寸，Seedream 5.0（海外），预期生成成功且尺寸与所选一致"
+  },
+  {
+    "case_name": "Seedream 5.0（海外）-提示词达上限1000字符",
+    "source_csv_row": 61,
+    "csv_status": "执行中",
+    "test_type": "prompt_at_limit",
+    "model_display": "Seedream 5.0（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "prompt": "<需构造恰好1000个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造恰好 1000 字符的 prompt，预期提交成功并正常生成"
+  },
+  {
+    "case_name": "Seedream 5.0（海外）-提示词超过1000字符",
+    "source_csv_row": 62,
+    "csv_status": "执行中",
+    "test_type": "prompt_exceeds_limit",
+    "model_display": "Seedream 5.0（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "prompt": "<需构造1010个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造 1010 字符的 prompt，发送请求，预期被拦截（code != 200 或异步失败）"
+  },
+  {
+    "case_name": "Seedream 5.0（海外）-参考图达上限10张",
+    "source_csv_row": 63,
+    "csv_status": "执行中",
+    "test_type": "reference_count_at_limit",
+    "model_display": "Seedream 5.0（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "inputFile": "<需提供恰好10张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名",
+    "help": "提供恰好 10 张参考图 URL，预期提交成功"
+  },
+  {
+    "case_name": "Seedream 5.0（海外）-参考图超过10张",
+    "source_csv_row": 64,
+    "csv_status": "执行中",
+    "test_type": "reference_count_exceeds",
+    "model_display": "Seedream 5.0（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供11张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名（inputFile 数组？）",
+    "help": "提供 11 张参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 5.0（海外）-参考图单张超过10MB",
+    "source_csv_row": 65,
+    "csv_status": "执行中",
+    "test_type": "reference_size_exceeds",
+    "model_display": "Seedream 5.0（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供>10MB 的参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "需准备超大参考图 URL",
+    "help": "提供 >10MB 的参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 5.0（海外）-参考图不支持格式",
+    "source_csv_row": 66,
+    "csv_status": "执行中",
+    "test_type": "reference_unsupported_format",
+    "model_display": "Seedream 5.0（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供非JPEG/PNG/WEBP格式图片URL>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "提供 BMP/TIFF/GIF 等非支持格式图片 URL，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 5.0（海外）-参考图比例/像素越界",
+    "source_csv_row": 67,
+    "csv_status": "执行中",
+    "test_type": "reference_aspect_ratio_violation",
+    "model_display": "Seedream 5.0（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供违反比例/像素约束的参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "需确认该模型的比例约束规则",
+    "help": "提供违反宽高比/像素约束的参考图，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 5.0（海外）-自定义尺寸越界",
+    "source_csv_row": 68,
+    "csv_status": "执行中",
+    "test_type": "custom_dimension_out_of_bounds",
+    "model_display": "Seedream 5.0（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "imageSize": "<需填入越界尺寸>"
+    },
+    "need_special_account": false,
+    "notes": "需确认该模型的自定义尺寸约束规则",
+    "help": "填入超过模型允许范围的自定义宽高，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 5.0（官方）-预置尺寸选择与生成",
+    "source_csv_row": 69,
+    "csv_status": "执行中",
+    "test_type": "preset_size_generation",
+    "model_display": "Seedream 5.0（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "",
+    "help": "选择预置尺寸，Seedream 5.0（官方），预期生成成功且尺寸与所选一致"
+  },
+  {
+    "case_name": "Seedream 5.0（官方）-提示词达上限1000字符",
+    "source_csv_row": 70,
+    "csv_status": "执行中",
+    "test_type": "prompt_at_limit",
+    "model_display": "Seedream 5.0（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "prompt": "<需构造恰好1000个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造恰好 1000 字符的 prompt，预期提交成功并正常生成"
+  },
+  {
+    "case_name": "Seedream 5.0（官方）-提示词超过1000字符",
+    "source_csv_row": 71,
+    "csv_status": "执行中",
+    "test_type": "prompt_exceeds_limit",
+    "model_display": "Seedream 5.0（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "prompt": "<需构造1010个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造 1010 字符的 prompt，发送请求，预期被拦截（code != 200 或异步失败）"
+  },
+  {
+    "case_name": "Seedream 5.0（官方）-参考图达上限10张",
+    "source_csv_row": 72,
+    "csv_status": "执行中",
+    "test_type": "reference_count_at_limit",
+    "model_display": "Seedream 5.0（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "inputFile": "<需提供恰好10张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名",
+    "help": "提供恰好 10 张参考图 URL，预期提交成功"
+  },
+  {
+    "case_name": "Seedream 5.0（官方）-参考图超过10张",
+    "source_csv_row": 73,
+    "csv_status": "执行中",
+    "test_type": "reference_count_exceeds",
+    "model_display": "Seedream 5.0（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供11张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名（inputFile 数组？）",
+    "help": "提供 11 张参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 5.0（官方）-参考图单张超过10MB",
+    "source_csv_row": 74,
+    "csv_status": "执行中",
+    "test_type": "reference_size_exceeds",
+    "model_display": "Seedream 5.0（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供>10MB 的参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "需准备超大参考图 URL",
+    "help": "提供 >10MB 的参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 5.0（官方）-参考图不支持格式",
+    "source_csv_row": 75,
+    "csv_status": "执行中",
+    "test_type": "reference_unsupported_format",
+    "model_display": "Seedream 5.0（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供非JPEG/PNG/WEBP格式图片URL>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "提供 BMP/TIFF/GIF 等非支持格式图片 URL，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 5.0（官方）-参考图比例/像素越界",
+    "source_csv_row": 76,
+    "csv_status": "执行中",
+    "test_type": "reference_aspect_ratio_violation",
+    "model_display": "Seedream 5.0（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供违反比例/像素约束的参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "需确认该模型的比例约束规则",
+    "help": "提供违反宽高比/像素约束的参考图，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 5.0（官方）-自定义尺寸越界",
+    "source_csv_row": 77,
+    "csv_status": "执行中",
+    "test_type": "custom_dimension_out_of_bounds",
+    "model_display": "Seedream 5.0（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "imageSize": "<需填入越界尺寸>"
+    },
+    "need_special_account": false,
+    "notes": "需确认该模型的自定义尺寸约束规则",
+    "help": "填入超过模型允许范围的自定义宽高，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 4.5（海外）-预置尺寸选择与生成",
+    "source_csv_row": 78,
+    "csv_status": "执行中",
+    "test_type": "preset_size_generation",
+    "model_display": "Seedream 4.5（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "",
+    "help": "选择预置尺寸，Seedream 4.5（海外），预期生成成功且尺寸与所选一致"
+  },
+  {
+    "case_name": "Seedream 4.5（海外）-提示词达上限1000字符",
+    "source_csv_row": 79,
+    "csv_status": "执行中",
+    "test_type": "prompt_at_limit",
+    "model_display": "Seedream 4.5（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "prompt": "<需构造恰好1000个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造恰好 1000 字符的 prompt，预期提交成功并正常生成"
+  },
+  {
+    "case_name": "Seedream 4.5（海外）-提示词超过1000字符",
+    "source_csv_row": 80,
+    "csv_status": "执行中",
+    "test_type": "prompt_exceeds_limit",
+    "model_display": "Seedream 4.5（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "prompt": "<需构造1010个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造 1010 字符的 prompt，发送请求，预期被拦截（code != 200 或异步失败）"
+  },
+  {
+    "case_name": "Seedream 4.5（海外）-参考图达上限10张",
+    "source_csv_row": 81,
+    "csv_status": "执行中",
+    "test_type": "reference_count_at_limit",
+    "model_display": "Seedream 4.5（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "inputFile": "<需提供恰好10张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名",
+    "help": "提供恰好 10 张参考图 URL，预期提交成功"
+  },
+  {
+    "case_name": "Seedream 4.5（海外）-参考图超过10张",
+    "source_csv_row": 82,
+    "csv_status": "执行中",
+    "test_type": "reference_count_exceeds",
+    "model_display": "Seedream 4.5（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供11张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名（inputFile 数组？）",
+    "help": "提供 11 张参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 4.5（海外）-参考图单张超过10MB",
+    "source_csv_row": 83,
+    "csv_status": "执行中",
+    "test_type": "reference_size_exceeds",
+    "model_display": "Seedream 4.5（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供>10MB 的参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "需准备超大参考图 URL",
+    "help": "提供 >10MB 的参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 4.5（海外）-参考图不支持格式",
+    "source_csv_row": 84,
+    "csv_status": "执行中",
+    "test_type": "reference_unsupported_format",
+    "model_display": "Seedream 4.5（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供非JPEG/PNG/WEBP格式图片URL>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "提供 BMP/TIFF/GIF 等非支持格式图片 URL，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 4.5（海外）-参考图比例/像素越界",
+    "source_csv_row": 85,
+    "csv_status": "执行中",
+    "test_type": "reference_aspect_ratio_violation",
+    "model_display": "Seedream 4.5（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供违反比例/像素约束的参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "需确认该模型的比例约束规则",
+    "help": "提供违反宽高比/像素约束的参考图，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 4.5（海外）-自定义尺寸越界",
+    "source_csv_row": 86,
+    "csv_status": "执行中",
+    "test_type": "custom_dimension_out_of_bounds",
+    "model_display": "Seedream 4.5（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "imageSize": "<需填入越界尺寸>"
+    },
+    "need_special_account": false,
+    "notes": "需确认该模型的自定义尺寸约束规则",
+    "help": "填入超过模型允许范围的自定义宽高，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 4.5（官方）-预置尺寸选择与生成",
+    "source_csv_row": 87,
+    "csv_status": "执行中",
+    "test_type": "preset_size_generation",
+    "model_display": "Seedream 4.5（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "",
+    "help": "选择预置尺寸，Seedream 4.5（官方），预期生成成功且尺寸与所选一致"
+  },
+  {
+    "case_name": "Seedream 4.5（官方）-提示词达上限1000字符",
+    "source_csv_row": 88,
+    "csv_status": "执行中",
+    "test_type": "prompt_at_limit",
+    "model_display": "Seedream 4.5（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "prompt": "<需构造恰好1000个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造恰好 1000 字符的 prompt，预期提交成功并正常生成"
+  },
+  {
+    "case_name": "Seedream 4.5（官方）-提示词超过1000字符",
+    "source_csv_row": 89,
+    "csv_status": "执行中",
+    "test_type": "prompt_exceeds_limit",
+    "model_display": "Seedream 4.5（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "prompt": "<需构造1010个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造 1010 字符的 prompt，发送请求，预期被拦截（code != 200 或异步失败）"
+  },
+  {
+    "case_name": "Seedream 4.5（官方）-参考图达上限10张",
+    "source_csv_row": 90,
+    "csv_status": "执行中",
+    "test_type": "reference_count_at_limit",
+    "model_display": "Seedream 4.5（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "inputFile": "<需提供恰好10张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名",
+    "help": "提供恰好 10 张参考图 URL，预期提交成功"
+  },
+  {
+    "case_name": "Seedream 4.5（官方）-参考图超过10张",
+    "source_csv_row": 91,
+    "csv_status": "执行中",
+    "test_type": "reference_count_exceeds",
+    "model_display": "Seedream 4.5（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供11张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名（inputFile 数组？）",
+    "help": "提供 11 张参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 4.5（官方）-参考图单张超过10MB",
+    "source_csv_row": 92,
+    "csv_status": "执行中",
+    "test_type": "reference_size_exceeds",
+    "model_display": "Seedream 4.5（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供>10MB 的参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "需准备超大参考图 URL",
+    "help": "提供 >10MB 的参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 4.5（官方）-参考图不支持格式",
+    "source_csv_row": 93,
+    "csv_status": "执行中",
+    "test_type": "reference_unsupported_format",
+    "model_display": "Seedream 4.5（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供非JPEG/PNG/WEBP格式图片URL>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "提供 BMP/TIFF/GIF 等非支持格式图片 URL，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 4.5（官方）-参考图比例/像素越界",
+    "source_csv_row": 94,
+    "csv_status": "执行中",
+    "test_type": "reference_aspect_ratio_violation",
+    "model_display": "Seedream 4.5（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供违反比例/像素约束的参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "需确认该模型的比例约束规则",
+    "help": "提供违反宽高比/像素约束的参考图，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 4.5（官方）-自定义尺寸越界",
+    "source_csv_row": 95,
+    "csv_status": "执行中",
+    "test_type": "custom_dimension_out_of_bounds",
+    "model_display": "Seedream 4.5（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "imageSize": "<需填入越界尺寸>"
+    },
+    "need_special_account": false,
+    "notes": "需确认该模型的自定义尺寸约束规则",
+    "help": "填入超过模型允许范围的自定义宽高，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 4.0（海外）-预置尺寸选择与生成",
+    "source_csv_row": 96,
+    "csv_status": "执行中",
+    "test_type": "preset_size_generation",
+    "model_display": "Seedream 4.0（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "",
+    "help": "选择预置尺寸，Seedream 4.0（海外），预期生成成功且尺寸与所选一致"
+  },
+  {
+    "case_name": "Seedream 4.0（海外）-提示词达上限1000字符",
+    "source_csv_row": 97,
+    "csv_status": "执行中",
+    "test_type": "prompt_at_limit",
+    "model_display": "Seedream 4.0（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "prompt": "<需构造恰好1000个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造恰好 1000 字符的 prompt，预期提交成功并正常生成"
+  },
+  {
+    "case_name": "Seedream 4.0（海外）-提示词超过1000字符",
+    "source_csv_row": 98,
+    "csv_status": "执行中",
+    "test_type": "prompt_exceeds_limit",
+    "model_display": "Seedream 4.0（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "prompt": "<需构造1010个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造 1010 字符的 prompt，发送请求，预期被拦截（code != 200 或异步失败）"
+  },
+  {
+    "case_name": "Seedream 4.0（海外）-参考图达上限10张",
+    "source_csv_row": 99,
+    "csv_status": "执行中",
+    "test_type": "reference_count_at_limit",
+    "model_display": "Seedream 4.0（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "inputFile": "<需提供恰好10张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名",
+    "help": "提供恰好 10 张参考图 URL，预期提交成功"
+  },
+  {
+    "case_name": "Seedream 4.0（海外）-参考图超过10张",
+    "source_csv_row": 100,
+    "csv_status": "执行中",
+    "test_type": "reference_count_exceeds",
+    "model_display": "Seedream 4.0（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供11张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名（inputFile 数组？）",
+    "help": "提供 11 张参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 4.0（海外）-参考图单张超过10MB",
+    "source_csv_row": 101,
+    "csv_status": "执行中",
+    "test_type": "reference_size_exceeds",
+    "model_display": "Seedream 4.0（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供>10MB 的参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "需准备超大参考图 URL",
+    "help": "提供 >10MB 的参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 4.0（海外）-参考图不支持格式",
+    "source_csv_row": 102,
+    "csv_status": "执行中",
+    "test_type": "reference_unsupported_format",
+    "model_display": "Seedream 4.0（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供非JPEG/PNG/WEBP格式图片URL>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "提供 BMP/TIFF/GIF 等非支持格式图片 URL，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 4.0（海外）-参考图比例/像素越界",
+    "source_csv_row": 103,
+    "csv_status": "执行中",
+    "test_type": "reference_aspect_ratio_violation",
+    "model_display": "Seedream 4.0（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供违反比例/像素约束的参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "需确认该模型的比例约束规则",
+    "help": "提供违反宽高比/像素约束的参考图，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 4.0（海外）-自定义尺寸越界",
+    "source_csv_row": 104,
+    "csv_status": "执行中",
+    "test_type": "custom_dimension_out_of_bounds",
+    "model_display": "Seedream 4.0（海外）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "imageSize": "<需填入越界尺寸>"
+    },
+    "need_special_account": false,
+    "notes": "需确认该模型的自定义尺寸约束规则",
+    "help": "填入超过模型允许范围的自定义宽高，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 4.0（官方）-预置尺寸选择与生成",
+    "source_csv_row": 105,
+    "csv_status": "执行中",
+    "test_type": "preset_size_generation",
+    "model_display": "Seedream 4.0（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "",
+    "help": "选择预置尺寸，Seedream 4.0（官方），预期生成成功且尺寸与所选一致"
+  },
+  {
+    "case_name": "Seedream 4.0（官方）-提示词达上限1000字符",
+    "source_csv_row": 106,
+    "csv_status": "执行中",
+    "test_type": "prompt_at_limit",
+    "model_display": "Seedream 4.0（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "prompt": "<需构造恰好1000个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造恰好 1000 字符的 prompt，预期提交成功并正常生成"
+  },
+  {
+    "case_name": "Seedream 4.0（官方）-提示词超过1000字符",
+    "source_csv_row": 107,
+    "csv_status": "执行中",
+    "test_type": "prompt_exceeds_limit",
+    "model_display": "Seedream 4.0（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "prompt": "<需构造1010个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造 1010 字符的 prompt，发送请求，预期被拦截（code != 200 或异步失败）"
+  },
+  {
+    "case_name": "Seedream 4.0（官方）-参考图达上限10张",
+    "source_csv_row": 108,
+    "csv_status": "执行中",
+    "test_type": "reference_count_at_limit",
+    "model_display": "Seedream 4.0（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "inputFile": "<需提供恰好10张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名",
+    "help": "提供恰好 10 张参考图 URL，预期提交成功"
+  },
+  {
+    "case_name": "Seedream 4.0（官方）-参考图超过10张",
+    "source_csv_row": 109,
+    "csv_status": "执行中",
+    "test_type": "reference_count_exceeds",
+    "model_display": "Seedream 4.0（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供11张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名（inputFile 数组？）",
+    "help": "提供 11 张参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 4.0（官方）-参考图单张超过10MB",
+    "source_csv_row": 110,
+    "csv_status": "执行中",
+    "test_type": "reference_size_exceeds",
+    "model_display": "Seedream 4.0（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供>10MB 的参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "需准备超大参考图 URL",
+    "help": "提供 >10MB 的参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 4.0（官方）-参考图不支持格式",
+    "source_csv_row": 111,
+    "csv_status": "执行中",
+    "test_type": "reference_unsupported_format",
+    "model_display": "Seedream 4.0（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供非JPEG/PNG/WEBP格式图片URL>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "提供 BMP/TIFF/GIF 等非支持格式图片 URL，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 4.0（官方）-参考图比例/像素越界",
+    "source_csv_row": 112,
+    "csv_status": "执行中",
+    "test_type": "reference_aspect_ratio_violation",
+    "model_display": "Seedream 4.0（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供违反比例/像素约束的参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "需确认该模型的比例约束规则",
+    "help": "提供违反宽高比/像素约束的参考图，预期被拦截"
+  },
+  {
+    "case_name": "Seedream 4.0（官方）-自定义尺寸越界",
+    "source_csv_row": 113,
+    "csv_status": "执行中",
+    "test_type": "custom_dimension_out_of_bounds",
+    "model_display": "Seedream 4.0（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "imageSize": "<需填入越界尺寸>"
+    },
+    "need_special_account": false,
+    "notes": "需确认该模型的自定义尺寸约束规则",
+    "help": "填入超过模型允许范围的自定义宽高，预期被拦截"
+  },
+  {
+    "case_name": "Nanobanana 2（第三方）-图像尺寸选择与生成",
+    "source_csv_row": 114,
+    "csv_status": "执行中",
+    "test_type": "image_size_generation",
+    "model_display": "Nanobanana 2（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "",
+    "help": "选择图像尺寸，Nanobanana 2（第三方），预期生成成功且尺寸与所选一致"
+  },
+  {
+    "case_name": "Nanobanana 2（第三方）-提示词达上限10000字符",
+    "source_csv_row": 115,
+    "csv_status": "执行中",
+    "test_type": "prompt_at_limit",
+    "model_display": "Nanobanana 2（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "prompt": "<需构造恰好10000个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造恰好 10000 字符的 prompt，预期提交成功并正常生成"
+  },
+  {
+    "case_name": "Nanobanana 2（第三方）-提示词超过10000字符",
+    "source_csv_row": 116,
+    "csv_status": "执行中",
+    "test_type": "prompt_exceeds_limit",
+    "model_display": "Nanobanana 2（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "prompt": "<需构造10010个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造 10010 字符的 prompt，发送请求，预期被拦截（code != 200 或异步失败）"
+  },
+  {
+    "case_name": "Nanobanana 2（第三方）-参考图达上限14张",
+    "source_csv_row": 117,
+    "csv_status": "执行中",
+    "test_type": "reference_count_at_limit",
+    "model_display": "Nanobanana 2（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "inputFile": "<需提供恰好14张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名",
+    "help": "提供恰好 14 张参考图 URL，预期提交成功"
+  },
+  {
+    "case_name": "Nanobanana 2（第三方）-参考图超过14张",
+    "source_csv_row": 118,
+    "csv_status": "执行中",
+    "test_type": "reference_count_exceeds",
+    "model_display": "Nanobanana 2（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供15张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名（inputFile 数组？）",
+    "help": "提供 15 张参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "Nanobanana 2（第三方）-参考图单张超过7MB",
+    "source_csv_row": 119,
+    "csv_status": "执行中",
+    "test_type": "reference_size_exceeds",
+    "model_display": "Nanobanana 2（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供>10MB 的参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "需准备超大参考图 URL",
+    "help": "提供 >10MB 的参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "Nanobanana 2（第三方）-参考图不支持格式",
+    "source_csv_row": 120,
+    "csv_status": "执行中",
+    "test_type": "reference_unsupported_format",
+    "model_display": "Nanobanana 2（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供非JPEG/PNG/WEBP格式图片URL>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "提供 BMP/TIFF/GIF 等非支持格式图片 URL，预期被拦截"
+  },
+  {
+    "case_name": "Nanobanana 2（官方）-图像尺寸选择与生成",
+    "source_csv_row": 121,
+    "csv_status": "执行中",
+    "test_type": "image_size_generation",
+    "model_display": "Nanobanana 2（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "",
+    "help": "选择图像尺寸，Nanobanana 2（官方），预期生成成功且尺寸与所选一致"
+  },
+  {
+    "case_name": "Nanobanana 2（官方）-提示词达上限10000字符",
+    "source_csv_row": 122,
+    "csv_status": "执行中",
+    "test_type": "prompt_at_limit",
+    "model_display": "Nanobanana 2（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "prompt": "<需构造恰好10000个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造恰好 10000 字符的 prompt，预期提交成功并正常生成"
+  },
+  {
+    "case_name": "Nanobanana 2（官方）-提示词超过10000字符",
+    "source_csv_row": 123,
+    "csv_status": "执行中",
+    "test_type": "prompt_exceeds_limit",
+    "model_display": "Nanobanana 2（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "prompt": "<需构造10010个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造 10010 字符的 prompt，发送请求，预期被拦截（code != 200 或异步失败）"
+  },
+  {
+    "case_name": "Nanobanana 2（官方）-参考图达上限14张",
+    "source_csv_row": 124,
+    "csv_status": "执行中",
+    "test_type": "reference_count_at_limit",
+    "model_display": "Nanobanana 2（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "inputFile": "<需提供恰好14张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名",
+    "help": "提供恰好 14 张参考图 URL，预期提交成功"
+  },
+  {
+    "case_name": "Nanobanana 2（官方）-参考图超过14张",
+    "source_csv_row": 125,
+    "csv_status": "执行中",
+    "test_type": "reference_count_exceeds",
+    "model_display": "Nanobanana 2（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供15张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名（inputFile 数组？）",
+    "help": "提供 15 张参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "Nanobanana 2（官方）-参考图不支持格式",
+    "source_csv_row": 126,
+    "csv_status": "执行中",
+    "test_type": "reference_unsupported_format",
+    "model_display": "Nanobanana 2（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供非JPEG/PNG/WEBP格式图片URL>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "提供 BMP/TIFF/GIF 等非支持格式图片 URL，预期被拦截"
+  },
+  {
+    "case_name": "Nanobanana Pro（第三方）-图像尺寸选择与生成",
+    "source_csv_row": 127,
+    "csv_status": "执行中",
+    "test_type": "image_size_generation",
+    "model_display": "Nanobanana Pro（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "",
+    "help": "选择图像尺寸，Nanobanana Pro（第三方），预期生成成功且尺寸与所选一致"
+  },
+  {
+    "case_name": "Nanobanana Pro（第三方）-提示词达上限10000字符",
+    "source_csv_row": 128,
+    "csv_status": "执行中",
+    "test_type": "prompt_at_limit",
+    "model_display": "Nanobanana Pro（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "prompt": "<需构造恰好10000个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造恰好 10000 字符的 prompt，预期提交成功并正常生成"
+  },
+  {
+    "case_name": "Nanobanana Pro（第三方）-提示词超过10000字符",
+    "source_csv_row": 129,
+    "csv_status": "执行中",
+    "test_type": "prompt_exceeds_limit",
+    "model_display": "Nanobanana Pro（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "prompt": "<需构造10010个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造 10010 字符的 prompt，发送请求，预期被拦截（code != 200 或异步失败）"
+  },
+  {
+    "case_name": "Nanobanana Pro（第三方）-参考图达上限14张",
+    "source_csv_row": 130,
+    "csv_status": "执行中",
+    "test_type": "reference_count_at_limit",
+    "model_display": "Nanobanana Pro（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "inputFile": "<需提供恰好14张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名",
+    "help": "提供恰好 14 张参考图 URL，预期提交成功"
+  },
+  {
+    "case_name": "Nanobanana Pro（第三方）-参考图超过14张",
+    "source_csv_row": 131,
+    "csv_status": "执行中",
+    "test_type": "reference_count_exceeds",
+    "model_display": "Nanobanana Pro（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供15张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名（inputFile 数组？）",
+    "help": "提供 15 张参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "Nanobanana Pro（第三方）-参考图单张超过7MB",
+    "source_csv_row": 132,
+    "csv_status": "执行中",
+    "test_type": "reference_size_exceeds",
+    "model_display": "Nanobanana Pro（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供>10MB 的参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "需准备超大参考图 URL",
+    "help": "提供 >10MB 的参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "Nanobanana Pro（第三方）-参考图不支持格式",
+    "source_csv_row": 133,
+    "csv_status": "执行中",
+    "test_type": "reference_unsupported_format",
+    "model_display": "Nanobanana Pro（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供非JPEG/PNG/WEBP格式图片URL>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "提供 BMP/TIFF/GIF 等非支持格式图片 URL，预期被拦截"
+  },
+  {
+    "case_name": "Nanobanana Pro（官方）-图像尺寸选择与生成",
+    "source_csv_row": 134,
+    "csv_status": "执行中",
+    "test_type": "image_size_generation",
+    "model_display": "Nanobanana Pro（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "",
+    "help": "选择图像尺寸，Nanobanana Pro（官方），预期生成成功且尺寸与所选一致"
+  },
+  {
+    "case_name": "Nanobanana Pro（官方）-提示词达上限10000字符",
+    "source_csv_row": 135,
+    "csv_status": "执行中",
+    "test_type": "prompt_at_limit",
+    "model_display": "Nanobanana Pro（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "prompt": "<需构造恰好10000个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造恰好 10000 字符的 prompt，预期提交成功并正常生成"
+  },
+  {
+    "case_name": "Nanobanana Pro（官方）-提示词超过10000字符",
+    "source_csv_row": 136,
+    "csv_status": "执行中",
+    "test_type": "prompt_exceeds_limit",
+    "model_display": "Nanobanana Pro（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "prompt": "<需构造10010个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造 10010 字符的 prompt，发送请求，预期被拦截（code != 200 或异步失败）"
+  },
+  {
+    "case_name": "Nanobanana Pro（官方）-参考图达上限14张",
+    "source_csv_row": 137,
+    "csv_status": "执行中",
+    "test_type": "reference_count_at_limit",
+    "model_display": "Nanobanana Pro（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "inputFile": "<需提供恰好14张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名",
+    "help": "提供恰好 14 张参考图 URL，预期提交成功"
+  },
+  {
+    "case_name": "Nanobanana Pro（官方）-参考图超过14张",
+    "source_csv_row": 138,
+    "csv_status": "执行中",
+    "test_type": "reference_count_exceeds",
+    "model_display": "Nanobanana Pro（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供15张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名（inputFile 数组？）",
+    "help": "提供 15 张参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "Nanobanana Pro（官方）-参考图不支持格式",
+    "source_csv_row": 139,
+    "csv_status": "执行中",
+    "test_type": "reference_unsupported_format",
+    "model_display": "Nanobanana Pro（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供非JPEG/PNG/WEBP格式图片URL>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "提供 BMP/TIFF/GIF 等非支持格式图片 URL，预期被拦截"
+  },
+  {
+    "case_name": "Nanobanana（第三方）-图像尺寸选择与生成",
+    "source_csv_row": 140,
+    "csv_status": "执行中",
+    "test_type": "image_size_generation",
+    "model_display": "Nanobanana（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "",
+    "help": "选择图像尺寸，Nanobanana（第三方），预期生成成功且尺寸与所选一致"
+  },
+  {
+    "case_name": "Nanobanana（第三方）-提示词达上限10000字符",
+    "source_csv_row": 141,
+    "csv_status": "执行中",
+    "test_type": "prompt_at_limit",
+    "model_display": "Nanobanana（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "prompt": "<需构造恰好10000个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造恰好 10000 字符的 prompt，预期提交成功并正常生成"
+  },
+  {
+    "case_name": "Nanobanana（第三方）-提示词超过10000字符",
+    "source_csv_row": 142,
+    "csv_status": "执行中",
+    "test_type": "prompt_exceeds_limit",
+    "model_display": "Nanobanana（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "prompt": "<需构造10010个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造 10010 字符的 prompt，发送请求，预期被拦截（code != 200 或异步失败）"
+  },
+  {
+    "case_name": "Nanobanana（第三方）-参考图达上限3张",
+    "source_csv_row": 143,
+    "csv_status": "执行中",
+    "test_type": "reference_count_at_limit",
+    "model_display": "Nanobanana（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "inputFile": "<需提供恰好3张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名",
+    "help": "提供恰好 3 张参考图 URL，预期提交成功"
+  },
+  {
+    "case_name": "Nanobanana（第三方）-参考图超过3张",
+    "source_csv_row": 144,
+    "csv_status": "执行中",
+    "test_type": "reference_count_exceeds",
+    "model_display": "Nanobanana（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供4张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名（inputFile 数组？）",
+    "help": "提供 4 张参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "Nanobanana（第三方）-参考图单张超过7MB",
+    "source_csv_row": 145,
+    "csv_status": "执行中",
+    "test_type": "reference_size_exceeds",
+    "model_display": "Nanobanana（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供>10MB 的参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "需准备超大参考图 URL",
+    "help": "提供 >10MB 的参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "Nanobanana（第三方）-参考图不支持格式",
+    "source_csv_row": 146,
+    "csv_status": "执行中",
+    "test_type": "reference_unsupported_format",
+    "model_display": "Nanobanana（第三方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供非JPEG/PNG/WEBP格式图片URL>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "提供 BMP/TIFF/GIF 等非支持格式图片 URL，预期被拦截"
+  },
+  {
+    "case_name": "Nanobanana（官方）-图像尺寸选择与生成",
+    "source_csv_row": 147,
+    "csv_status": "执行中",
+    "test_type": "image_size_generation",
+    "model_display": "Nanobanana（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {},
+    "need_special_account": false,
+    "notes": "",
+    "help": "选择图像尺寸，Nanobanana（官方），预期生成成功且尺寸与所选一致"
+  },
+  {
+    "case_name": "Nanobanana（官方）-提示词达上限10000字符",
+    "source_csv_row": 148,
+    "csv_status": "执行中",
+    "test_type": "prompt_at_limit",
+    "model_display": "Nanobanana（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "prompt": "<需构造恰好10000个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造恰好 10000 字符的 prompt，预期提交成功并正常生成"
+  },
+  {
+    "case_name": "Nanobanana（官方）-提示词超过10000字符",
+    "source_csv_row": 149,
+    "csv_status": "执行中",
+    "test_type": "prompt_exceeds_limit",
+    "model_display": "Nanobanana（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "prompt": "<需构造10010个字符的提示词>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "构造 10010 字符的 prompt，发送请求，预期被拦截（code != 200 或异步失败）"
+  },
+  {
+    "case_name": "Nanobanana（官方）-参考图达上限3张",
+    "source_csv_row": 150,
+    "csv_status": "执行中",
+    "test_type": "reference_count_at_limit",
+    "model_display": "Nanobanana（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": true,
+    "payload_changes": {
+      "inputFile": "<需提供恰好3张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名",
+    "help": "提供恰好 3 张参考图 URL，预期提交成功"
+  },
+  {
+    "case_name": "Nanobanana（官方）-参考图超过3张",
+    "source_csv_row": 151,
+    "csv_status": "执行中",
+    "test_type": "reference_count_exceeds",
+    "model_display": "Nanobanana（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供4张参考图URL>"
+    },
+    "need_special_account": false,
+    "notes": "确认 API 是否接受多张参考图的字段名（inputFile 数组？）",
+    "help": "提供 4 张参考图 URL，预期被拦截"
+  },
+  {
+    "case_name": "Nanobanana（官方）-参考图不支持格式",
+    "source_csv_row": 152,
+    "csv_status": "执行中",
+    "test_type": "reference_unsupported_format",
+    "model_display": "Nanobanana（官方）",
+    "model_internal": null,
+    "auto_applicable": true,
+    "expected_success": false,
+    "payload_changes": {
+      "inputFile": "<需提供非JPEG/PNG/WEBP格式图片URL>"
+    },
+    "need_special_account": false,
+    "notes": "",
+    "help": "提供 BMP/TIFF/GIF 等非支持格式图片 URL，预期被拦截"
+  }
+]

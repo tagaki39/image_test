@@ -1,0 +1,8 @@
+.env
+__pycache__/
+.pytest_cache/
+reports/*
+!reports/.gitkeep
+*.pyc
+.idea/
+.vscode/

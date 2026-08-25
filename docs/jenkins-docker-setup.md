@@ -1,5 +1,33 @@
 # Docker + Jenkins 接入指南
 
+## 0. 换新电脑如何复现（最快路径）
+
+### 只跑测试（不需要 Jenkins）
+
+```bash
+git clone https://github.com/tagaki39/image_test.git
+cd image_test
+copy .env.example .env        # 填入新 Token
+docker build -t image-api-test .
+docker run --rm --env-file .env image-api-test
+```
+
+### 完整 Jenkins 流水线（推荐，固化镜像 + compose）
+
+```bash
+git clone https://github.com/tagaki39/image_test.git
+cd image_test
+# 1. 构建固化镜像（预装 docker CLI，不再手动装）
+docker build -f docker/jenkins.Dockerfile -t jenkins-ci:1.0 .
+# 2. 一键启动
+docker compose up -d
+```
+
+新机器只需重新配置：
+- 浏览器初始化 Jenkins（初始密码 `docker logs jenkins`）
+- 重新添加 5 个凭据（Token 等，见第 4 节）
+- 凭据/构建历史在新机器是全新卷
+
 ## 1. 启动 Jenkins（关键：挂载 docker.sock）
 
 Jenkins 的 Pipeline 里要执行 `docker build` / `docker run`，

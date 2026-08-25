@@ -31,6 +31,8 @@ pipeline {
                 // docker run 的 -v 源路径会被宿主 daemon 解析，拿不到报告，
                 // 因此用 docker cp 把容器内报告导出到 Jenkins workspace
                 sh '''
+                    # Jenkins sh 默认 -e，测试失败(exit 1)会中断脚本，先关掉
+                    set +e
                     docker run --name fast-tests \
                         -e BASE_URL="${BASE_URL}" \
                         -e AUTHORIZATION="${AUTHORIZATION}" \
@@ -38,6 +40,7 @@ pipeline {
                         -e REFERENCE_IMAGE_URL="${REFERENCE_IMAGE_URL}" \
                         image-api-test
                     result=$?
+                    set -e
                     # 无论测试成败都导出报告
                     docker cp fast-tests:/app/reports/. "$PWD/reports/" || true
                     docker rm -f fast-tests || true
@@ -65,6 +68,7 @@ pipeline {
             }
             steps {
                 sh '''
+                    set +e
                     docker run --name full-tests \
                         -e BASE_URL="${BASE_URL}" \
                         -e AUTHORIZATION="${AUTHORIZATION}" \
@@ -72,6 +76,7 @@ pipeline {
                         -e REFERENCE_IMAGE_URL="${REFERENCE_IMAGE_URL}" \
                         image-api-test pytest --html=reports/full-report.html --self-contained-html
                     result=$?
+                    set -e
                     docker cp full-tests:/app/reports/. "$PWD/reports-full/" || true
                     docker rm -f full-tests || true
                     exit $result

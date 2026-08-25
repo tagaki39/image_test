@@ -12,5 +12,5 @@ COPY . .
 # pytest-html 不会自动创建报告目录
 RUN mkdir -p reports
 
-# 默认命令：跑非生成类用例
-CMD ["pytest", "-m", "not costly", "--html=reports/report.html", "--self-contained-html"]
+# 默认命令：跑非生成类用例（--html 已在 pytest.ini addopts 配置）
+CMD ["pytest", "-m", "not costly"]

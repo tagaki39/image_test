@@ -14,6 +14,11 @@ from utils.config import Settings
 load_dotenv()
 
 
+def pytest_configure(config) -> None:
+    """保证报告目录存在（pytest-html 不会自动创建）。"""
+    os.makedirs("reports", exist_ok=True)
+
+
 @pytest.fixture(scope="session")
 def settings() -> Settings:
     return Settings.from_env()

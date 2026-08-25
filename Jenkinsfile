@@ -56,9 +56,7 @@ pipeline {
         stage('Full Tests (costly)') {
             when {
                 // 只在手动触发时跑全部用例（含真实AI生成，会产生费用）
-                expression { currentBuild.rawBuild.getCause(
-                    hudson.model.Cause$UserIdCause) != null
-                }
+                triggeredBy 'UserIdCause'
             }
             steps {
                 sh '''

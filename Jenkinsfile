@@ -105,14 +105,14 @@ pipeline {
             emailext(
                 subject: "✅ 测试通过 - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: "本次构建通过。\n报告: ${env.BUILD_URL}",
-                to: '你的邮箱@example.com'
+                to: '3419830536@qq.com'
             )
         }
         failure {
             emailext(
                 subject: "❌ 测试失败 - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: "请检查报告: ${env.BUILD_URL}",
-                to: '你的邮箱@example.com'
+                to: '3419830536@qq.com'
             )
         }
     }

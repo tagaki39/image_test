@@ -1,0 +1,16 @@
+# 一键启动 Jenkins（任何机器：clone 后 docker compose up -d 即可）
+# 需先构建镜像：docker build -f docker/jenkins.Dockerfile -t jenkins-ci:1.0 .
+services:
+  jenkins:
+    image: jenkins-ci:1.0
+    container_name: jenkins
+    ports:
+      - "8080:8080"     # Jenkins Web 界面
+      - "50000:50000"   # Jenkins agent 通信
+    volumes:
+      - jenkins_home:/var/jenkins_home   # 配置/凭据/构建历史（持久化）
+      - /var/run/docker.sock:/var/run/docker.sock   # 使用宿主机 Docker
+    restart: always     # 崩了/重启自动拉起
+
+volumes:
+  jenkins_home:

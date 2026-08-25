@@ -33,6 +33,8 @@ pipeline {
                 sh '''
                     # Jenkins sh 默认 -e，测试失败(exit 1)会中断脚本，先关掉
                     set +e
+                    # 清理上次构建可能残留的同名容器
+                    docker rm -f fast-tests 2>/dev/null || true
                     docker run --name fast-tests \
                         -e BASE_URL="${BASE_URL}" \
                         -e AUTHORIZATION="${AUTHORIZATION}" \
@@ -69,6 +71,7 @@ pipeline {
             steps {
                 sh '''
                     set +e
+                    docker rm -f full-tests 2>/dev/null || true
                     docker run --name full-tests \
                         -e BASE_URL="${BASE_URL}" \
                         -e AUTHORIZATION="${AUTHORIZATION}" \

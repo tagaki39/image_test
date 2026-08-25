@@ -169,6 +169,11 @@ image_api_pytest_framework/
 │  ├─ test_image_generate_smoke.py
 │  ├─ test_image_generate_submit.py
 │  └─ test_task_list.py
+├─ docker/
+│  └─ jenkins.Dockerfile     # 固化 Jenkins 镜像（预装 docker CLI）
+├─ docker-compose.yml        # 一键启动 Jenkins
+├─ Jenkinsfile               # CI 流水线
+├─ Dockerfile                # 测试镜像
 ├─ conftest.py
 ├─ pytest.ini
 ├─ requirements.txt
@@ -176,7 +181,38 @@ image_api_pytest_framework/
 └─ README.md
 ```
 
-## 五、重要说明
+## 五、CI/CD（Jenkins + Docker）
+
+### 流水线结构
+
+```
+代码提交/手动触发
+  → Build Test Image     构建测试镜像（Dockerfile，python:3.12-slim）
+  → Fast Tests           非生成类用例（pytest -m "not costly"，秒级）
+  → Full Tests           全量用例（仅手动触发，含真实 AI 生成）
+  → HTML 报告归档 × 2     pytest-html + HTML Publisher
+  → 邮件通知             构建结果发送（emailext）
+```
+
+### 本地 Docker 跑测试
+
+```bash
+docker build -t image-api-test .
+docker run --rm --env-file .env image-api-test            # 非生成类
+docker run --rm --env-file .env image-api-test pytest      # 全量
+```
+
+### 一键部署 Jenkins
+
+```bash
+docker build -f docker/jenkins.Dockerfile -t jenkins-ci:1.0 .
+docker compose up -d
+# 浏览器打开 http://localhost:8080（初始密码：docker logs jenkins）
+```
+
+完整部署与排障手册见 [docs/jenkins-docker-setup.md](docs/jenkins-docker-setup.md)。
+
+## 六、重要说明
 
 1. AI生成结果具有随机性，不应断言生成图片内容完全一致。
 2. 推荐断言任务状态、字段结构、图片URL、图片可访问性、尺寸和数量。

@@ -46,6 +46,8 @@ pipeline {
                         reportFiles: 'report.html',
                         reportName: 'Fast Test Report',
                         keepAll: true,
+                        alwaysLinkToLastBuild: true,
+                        allowMissing: true,
                     ])
                 }
             }
@@ -76,6 +78,8 @@ pipeline {
                         reportFiles: 'full-report.html',
                         reportName: 'Full Test Report',
                         keepAll: true,
+                        alwaysLinkToLastBuild: true,
+                        allowMissing: true,
                     ])
                 }
             }

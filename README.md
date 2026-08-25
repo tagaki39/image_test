@@ -166,6 +166,7 @@ image_api_pytest_framework/
 ├─ tests/
 │  ├─ test_auth.py
 │  ├─ test_image_generate_negative.py
+│  ├─ test_image_generate_params.py
 │  ├─ test_image_generate_smoke.py
 │  ├─ test_image_generate_submit.py
 │  └─ test_task_list.py

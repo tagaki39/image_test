@@ -15,6 +15,12 @@ from utils.assertions import (
 
 
 class ImageTaskService:
+    # 状态枚举：
+    #   0 = 初始状态（任务刚创建）
+    #   1 = 待生成（排队中）
+    #   2 = 生成中
+    #   3 = 生成成功
+    #   4 = 生成失败
     IN_PROGRESS_STATUSES = {0, 1, 2}
     SUCCESS_STATUS = 3
     FAILED_STATUS = 4

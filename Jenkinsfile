@@ -28,15 +28,20 @@ pipeline {
         stage('Fast Tests (not costly)') {
             steps {
                 // 用镜像跑非生成类用例，凭据通过环境变量注入，不落盘
-                // 挂载卷把容器内生成的报告导出到 Jenkins workspace
+                // docker run 的 -v 源路径会被宿主 daemon 解析，拿不到报告，
+                // 因此用 docker cp 把容器内报告导出到 Jenkins workspace
                 sh '''
-                    docker run --rm \
-                        -v "$PWD/reports:/app/reports" \
+                    docker run --name fast-tests \
                         -e BASE_URL="${BASE_URL}" \
                         -e AUTHORIZATION="${AUTHORIZATION}" \
                         -e CLIENT_ID="${CLIENT_ID}" \
                         -e REFERENCE_IMAGE_URL="${REFERENCE_IMAGE_URL}" \
                         image-api-test
+                    result=$?
+                    # 无论测试成败都导出报告
+                    docker cp fast-tests:/app/reports/. "$PWD/reports/" || true
+                    docker rm -f fast-tests || true
+                    exit $result
                 '''
             }
             post {
@@ -60,13 +65,16 @@ pipeline {
             }
             steps {
                 sh '''
-                    docker run --rm \
-                        -v "$PWD/reports-full:/app/reports" \
+                    docker run --name full-tests \
                         -e BASE_URL="${BASE_URL}" \
                         -e AUTHORIZATION="${AUTHORIZATION}" \
                         -e CLIENT_ID="${CLIENT_ID}" \
                         -e REFERENCE_IMAGE_URL="${REFERENCE_IMAGE_URL}" \
                         image-api-test pytest --html=reports/full-report.html --self-contained-html
+                    result=$?
+                    docker cp full-tests:/app/reports/. "$PWD/reports-full/" || true
+                    docker rm -f full-tests || true
+                    exit $result
                 '''
             }
             post {

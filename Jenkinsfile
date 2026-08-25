@@ -13,7 +13,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'master',
-                    url: 'https://github.com/你的用户名/image_api_pytest_framework.git',
+                    url: 'https://github.com/tagaki39/image_test.git',
                     credentialsId: 'github-credentials'
             }
         }

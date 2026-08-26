@@ -6,6 +6,14 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# 安装 allure-commandline（阿里 Maven 镜像，生成 Allure 报告用）
+RUN curl -fsSL -o /tmp/allure.zip \
+      https://maven.aliyun.com/repository/central/io/qameta/allure/allure-commandline/2.29.0/allure-commandline-2.29.0.zip \
+    && python -m zipfile -e /tmp/allure.zip /opt \
+    && rm -f /tmp/allure.zip \
+    && ln -s /opt/allure-2.29.0/bin/allure /usr/local/bin/allure \
+    && allure --version
+
 # 拷贝项目代码
 COPY . .
 

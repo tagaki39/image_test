@@ -40,7 +40,10 @@ pipeline {
                         -e AUTHORIZATION="${AUTHORIZATION}" \
                         -e CLIENT_ID="${CLIENT_ID}" \
                         -e REFERENCE_IMAGE_URL="${REFERENCE_IMAGE_URL}" \
-                        image-api-test
+                        image-api-test pytest -m "not costly" \
+                            --alluredir=reports/allure-results \
+                        && allure generate reports/allure-results \
+                            -o reports/allure-report --clean
                     result=$?
                     set -e
                     # 无论测试成败都导出报告
@@ -55,6 +58,14 @@ pipeline {
                         reportDir: 'reports',
                         reportFiles: 'report.html',
                         reportName: 'Fast Test Report',
+                        keepAll: true,
+                        alwaysLinkToLastBuild: true,
+                        allowMissing: true,
+                    ])
+                    publishHTML([
+                        reportDir: 'reports',
+                        reportFiles: 'allure-report/index.html',
+                        reportName: 'Fast Test Allure Report',
                         keepAll: true,
                         alwaysLinkToLastBuild: true,
                         allowMissing: true,
@@ -77,7 +88,11 @@ pipeline {
                         -e AUTHORIZATION="${AUTHORIZATION}" \
                         -e CLIENT_ID="${CLIENT_ID}" \
                         -e REFERENCE_IMAGE_URL="${REFERENCE_IMAGE_URL}" \
-                        image-api-test pytest --html=reports/full-report.html --self-contained-html
+                        image-api-test pytest \
+                            --html=reports/full-report.html --self-contained-html \
+                            --alluredir=reports/allure-results \
+                        && allure generate reports/allure-results \
+                            -o reports/allure-report --clean
                     result=$?
                     set -e
                     docker cp full-tests:/app/reports/. "$PWD/reports-full/" || true
@@ -91,6 +106,14 @@ pipeline {
                         reportDir: 'reports-full',
                         reportFiles: 'full-report.html',
                         reportName: 'Full Test Report',
+                        keepAll: true,
+                        alwaysLinkToLastBuild: true,
+                        allowMissing: true,
+                    ])
+                    publishHTML([
+                        reportDir: 'reports-full',
+                        reportFiles: 'allure-report/index.html',
+                        reportName: 'Full Test Allure Report',
                         keepAll: true,
                         alwaysLinkToLastBuild: true,
                         allowMissing: true,

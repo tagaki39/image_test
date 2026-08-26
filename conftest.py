@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 import os
+import re
+import time
 from pathlib import Path
 
 import pytest
@@ -38,8 +40,9 @@ def pytest_runtest_makereport(item, call):
     if report.when == "call" and report.failed:
         snapshot = recorder_snapshot()
         if snapshot["request"] or snapshot["response"]:
-            safe_name = item.name.replace("::", "_").replace("/", "_")[:80]
-            file_path = FAILURES_DIR / f"{safe_name}_{report.nodeid.count('::')}.json"
+            # 参数化 id 可能含 \ / [ ] 等非法文件名字符，统一清洗
+            safe_name = re.sub(r'[\\/:*?"<>|]', "_", item.name)[:60]
+            file_path = FAILURES_DIR / f"{safe_name}_{time.time_ns()}.json"
             file_path.write_text(
                 json.dumps(snapshot, ensure_ascii=False, indent=2),
                 encoding="utf-8",

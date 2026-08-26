@@ -15,29 +15,38 @@ from utils.assertions import (
 )
 from utils.config import Settings
 
-VARIANTS_PATH = (
-    Path(__file__).resolve().parents[1] / "data" / "param_variants.json"
+VALID_CASES_PATH = (
+    Path(__file__).resolve().parents[1]
+    / "data"
+    / "image_valid_cases.json"
 )
 
 
-def _load_variants() -> dict[str, Any]:
-    with VARIANTS_PATH.open("r", encoding="utf-8") as file:
+def _load_valid_cases() -> list[dict[str, Any]]:
+    with VALID_CASES_PATH.open("r", encoding="utf-8") as file:
         return json.load(file)
 
 
-def _submit_and_verify(
+@pytest.mark.costly
+@pytest.mark.parametrize(
+    "case",
+    _load_valid_cases(),
+    ids=lambda item: item["case_name"],
+)
+def test_image_generate_valid_variants(
+    case: dict[str, Any],
     settings: Settings,
     image_api: ImageApi,
-    **changes: Any,
-) -> tuple[dict[str, Any], dict[str, Any]]:
-    """提交带参数变体的任务，校验提交成功 + 任务详情字段回显一致。
+) -> None:
+    """参数变体（尺寸/比例/数量）：提交后校验任务详情字段回显一致。
 
     只提交并查询一次详情，不等待生成完成（秒级，避免长时间占用）。
+    新增变体只需在 data/image_valid_cases.json 加数据。
     """
     payload = build_valid_image_payload(
         reference_image_url=settings.reference_image_url,
     )
-    payload.update(changes)
+    payload.update(case["changes"])
 
     response = image_api.generate_image(payload)
     assert_http_ok(response)
@@ -54,89 +63,11 @@ def _submit_and_verify(
 
     task = detail.get("data")
     assert isinstance(task, dict), "任务详情data应为对象"
-    return payload, task
 
-
-# ---------------------------------------------------------------------------
-# 图片尺寸变体
-# ---------------------------------------------------------------------------
-
-
-@pytest.mark.costly
-@pytest.mark.parametrize(
-    "image_size",
-    _load_variants()["image_sizes"],
-    ids=lambda value: f"size={value}",
-)
-def test_image_size_variants(
-    image_size: str,
-    settings: Settings,
-    image_api: ImageApi,
-) -> None:
-    """不同图片尺寸：任务详情 imageSize 应与请求一致。"""
-    payload, task = _submit_and_verify(
-        settings,
-        image_api,
-        imageSize=image_size,
-    )
-    assert task.get("imageSize") == payload["imageSize"], (
-        f"imageSize回显不一致，请求={payload['imageSize']!r}，"
-        f"响应={task.get('imageSize')!r}"
-    )
-
-
-# ---------------------------------------------------------------------------
-# 宽高比变体
-# ---------------------------------------------------------------------------
-
-
-@pytest.mark.costly
-@pytest.mark.parametrize(
-    "aspect_ratio",
-    _load_variants()["aspect_ratios"],
-    ids=lambda value: f"ratio={value}",
-)
-def test_aspect_ratio_variants(
-    aspect_ratio: str,
-    settings: Settings,
-    image_api: ImageApi,
-) -> None:
-    """不同宽高比：任务详情 aspectRatio 应与请求一致。"""
-    payload, task = _submit_and_verify(
-        settings,
-        image_api,
-        aspectRatio=aspect_ratio,
-    )
-    assert task.get("aspectRatio") == payload["aspectRatio"], (
-        f"aspectRatio回显不一致，请求={payload['aspectRatio']!r}，"
-        f"响应={task.get('aspectRatio')!r}"
-    )
-
-
-# ---------------------------------------------------------------------------
-# 生成数量变体
-# ---------------------------------------------------------------------------
-
-
-@pytest.mark.costly
-@pytest.mark.parametrize(
-    "generate_count",
-    _load_variants()["generate_counts"],
-    ids=lambda value: f"count={value}",
-)
-def test_generate_count_variants(
-    generate_count: int,
-    settings: Settings,
-    image_api: ImageApi,
-) -> None:
-    """不同生成数量：任务详情 generateImgCount 应与请求一致。"""
-    payload, task = _submit_and_verify(
-        settings,
-        image_api,
-        generateImgCount=generate_count,
-    )
-    assert task.get("generateImgCount") == payload["generateImgCount"], (
-        f"generateImgCount回显不一致，"
-        f"请求={payload['generateImgCount']!r}，"
-        f"响应={task.get('generateImgCount')!r}"
-    )
+    # 逐字段校验回显一致
+    for field in ("imageSize", "aspectRatio", "generateImgCount"):
+        if field in case["changes"]:
+            assert task.get(field) == payload[field], (
+                f"{field}回显不一致，请求={payload[field]!r}，"
+                f"响应={task.get(field)!r}"
+            )

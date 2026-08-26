@@ -12,27 +12,15 @@ from data.payloads import build_valid_image_payload
 from utils.assertions import assert_http_ok, parse_json
 from utils.config import Settings
 
-
-CASES_PATH = (
-    Path(__file__).resolve().parents[1]
-    / "data"
-    / "negative_cases.json"
-)
+DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 
 
-def load_cases() -> list[dict[str, Any]]:
-    with CASES_PATH.open("r", encoding="utf-8") as file:
+def _load_cases(filename: str) -> list[dict[str, Any]]:
+    with (DATA_DIR / filename).open("r", encoding="utf-8") as file:
         return json.load(file)
 
 
-@pytest.mark.negative
-@pytest.mark.costly
-@pytest.mark.parametrize(
-    "case",
-    load_cases(),
-    ids=lambda item: item["case_name"],
-)
-def test_image_generate_invalid_parameters(
+def _submit_invalid_payload(
     case: dict[str, Any],
     settings: Settings,
     image_api: ImageApi,
@@ -61,3 +49,35 @@ def test_image_generate_invalid_parameters(
                 "异常参数被当作成功请求接受，"
                 "需要确认是否属于异步失败场景"
             )
+
+
+@pytest.mark.negative
+@pytest.mark.costly
+@pytest.mark.parametrize(
+    "case",
+    _load_cases("image_invalid_cases.json"),
+    ids=lambda item: item["case_name"],
+)
+def test_image_generate_invalid_parameters(
+    case: dict[str, Any],
+    settings: Settings,
+    image_api: ImageApi,
+) -> None:
+    """异常参数：空/缺失/敏感词/非法模型/非法格式应被拒绝。"""
+    _submit_invalid_payload(case, settings, image_api)
+
+
+@pytest.mark.negative
+@pytest.mark.costly
+@pytest.mark.parametrize(
+    "case",
+    _load_cases("boundary_cases.json"),
+    ids=lambda item: item["case_name"],
+)
+def test_image_generate_boundary_parameters(
+    case: dict[str, Any],
+    settings: Settings,
+    image_api: ImageApi,
+) -> None:
+    """边界值：0/负数/超上限数量应被拒绝。"""
+    _submit_invalid_payload(case, settings, image_api)

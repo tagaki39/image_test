@@ -162,14 +162,20 @@ image_api_pytest_framework/
 │  └─ config.py
 ├─ data/
 │  ├─ payloads.py
-│  └─ negative_cases.json
+│  ├─ image_invalid_cases.json   # 异常参数（空/缺失/敏感词/非法格式）
+│  ├─ boundary_cases.json        # 边界值（0/负数/超上限）
+│  ├─ image_valid_cases.json     # 合法参数变体（尺寸/比例/数量）
+│  └─ auth_cases.json            # 鉴权失败场景
+├─ models/                       # Pydantic 响应模型
 ├─ tests/
 │  ├─ test_auth.py
 │  ├─ test_image_generate_negative.py
 │  ├─ test_image_generate_params.py
 │  ├─ test_image_generate_smoke.py
 │  ├─ test_image_generate_submit.py
-│  └─ test_task_list.py
+│  ├─ test_image_generate_failure.py
+│  ├─ test_task_list.py
+│  └─ test_task_service_unit.py
 ├─ docker/
 │  └─ jenkins.Dockerfile     # 固化 Jenkins 镜像（预装 docker CLI）
 ├─ docker-compose.yml        # 一键启动 Jenkins

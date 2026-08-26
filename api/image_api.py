@@ -4,6 +4,8 @@ from typing import Any
 
 import requests
 
+from utils.recorder import record_request, record_response
+
 
 class ImageApi:
     GENERATE_PATH = "/prod-api/aigc/task/generateImage"
@@ -23,11 +25,11 @@ class ImageApi:
         payload: dict[str, Any],
         timeout: int = 30,
     ) -> requests.Response:
-        return self.session.post(
-            f"{self.base_url}{self.GENERATE_PATH}",
-            json=payload,
-            timeout=timeout,
-        )
+        url = f"{self.base_url}{self.GENERATE_PATH}"
+        record_request("POST", url, self.session.headers, payload)
+        response = self.session.post(url, json=payload, timeout=timeout)
+        record_response(response)
+        return response
 
     def get_task_detail(
         self,
@@ -35,10 +37,11 @@ class ImageApi:
         timeout: int = 30,
     ) -> requests.Response:
         path = self.TASK_DETAIL_PATH.format(task_id=task_id)
-        return self.session.get(
-            f"{self.base_url}{path}",
-            timeout=timeout,
-        )
+        url = f"{self.base_url}{path}"
+        record_request("GET", url, self.session.headers)
+        response = self.session.get(url, timeout=timeout)
+        record_response(response)
+        return response
 
     def list_tasks(
         self,
@@ -49,19 +52,23 @@ class ImageApi:
         timeout: int = 30,
     ) -> requests.Response:
         """历史任务列表接口，仅用于列表功能测试，不用于任务轮询。"""
-        return self.session.get(
-            f"{self.base_url}{self.TASK_LIST_PATH}",
-            params={
-                "businessType": business_type,
-                "pageNum": page_num,
-                "pageSize": page_size,
-            },
-            timeout=timeout,
-        )
+        params = {
+            "businessType": business_type,
+            "pageNum": page_num,
+            "pageSize": page_size,
+        }
+        url = f"{self.base_url}{self.TASK_LIST_PATH}"
+        record_request("GET", url, self.session.headers, params)
+        response = self.session.get(url, params=params, timeout=timeout)
+        record_response(response)
+        return response
 
     @staticmethod
     def get_resource(
         url: str,
         timeout: int = 30,
     ) -> requests.Response:
-        return requests.get(url, timeout=timeout)
+        record_request("GET", url)
+        response = requests.get(url, timeout=timeout)
+        record_response(response)
+        return response

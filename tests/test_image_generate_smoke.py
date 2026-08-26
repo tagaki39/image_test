@@ -3,6 +3,7 @@ from __future__ import annotations
 import pytest
 
 from data.payloads import build_valid_image_payload
+from utils.enums import TaskStatus
 
 
 # 成功任务必须包含的字段
@@ -49,7 +50,7 @@ def test_generate_image_success(
     # 先校验字段完整性，避免后续下标 KeyError
     _assert_task_has_required_fields(task)
 
-    assert task["status"] == 3
+    assert task["status"] == TaskStatus.SUCCESS
 
     error_msg = task.get("errorMsg")
     assert error_msg is None or error_msg == "", (

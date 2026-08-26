@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import json
 import os
+from pathlib import Path
 
 import pytest
 import requests
@@ -11,14 +13,44 @@ from api.image_api import ImageApi
 from services.auth_service import AuthService
 from services.image_task_service import ImageTaskService
 from utils.config import Settings
+from utils.recorder import clear as clear_recorder
+from utils.recorder import snapshot as recorder_snapshot
 
 
 load_dotenv()
+
+FAILURES_DIR = Path("reports/failures")
 
 
 def pytest_configure(config) -> None:
     """保证报告目录存在（pytest-html 不会自动创建）。"""
     os.makedirs("reports", exist_ok=True)
+    FAILURES_DIR.mkdir(parents=True, exist_ok=True)
+
+
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    """测试失败时自动保存请求/响应现场到 reports/failures/。"""
+    outcome = yield
+    report = outcome.get_result()
+
+    if report.when == "call" and report.failed:
+        snapshot = recorder_snapshot()
+        if snapshot["request"] or snapshot["response"]:
+            safe_name = item.name.replace("::", "_").replace("/", "_")[:80]
+            file_path = FAILURES_DIR / f"{safe_name}_{report.nodeid.count('::')}.json"
+            file_path.write_text(
+                json.dumps(snapshot, ensure_ascii=False, indent=2),
+                encoding="utf-8",
+            )
+
+
+@pytest.fixture(autouse=True)
+def _reset_recorder():
+    """每个测试开始前清空请求/响应记录。"""
+    clear_recorder()
+    yield
+    clear_recorder()
 
 
 @pytest.fixture(scope="session")

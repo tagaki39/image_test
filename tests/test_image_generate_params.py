@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+from pathlib import Path
 from typing import Any
 
 import pytest
@@ -12,6 +14,15 @@ from utils.assertions import (
     parse_json,
 )
 from utils.config import Settings
+
+VARIANTS_PATH = (
+    Path(__file__).resolve().parents[1] / "data" / "param_variants.json"
+)
+
+
+def _load_variants() -> dict[str, Any]:
+    with VARIANTS_PATH.open("r", encoding="utf-8") as file:
+        return json.load(file)
 
 
 def _submit_and_verify(
@@ -54,11 +65,7 @@ def _submit_and_verify(
 @pytest.mark.costly
 @pytest.mark.parametrize(
     "image_size",
-    [
-        "512x512",
-        "1024x1024",
-        "2048x2048",
-    ],
+    _load_variants()["image_sizes"],
     ids=lambda value: f"size={value}",
 )
 def test_image_size_variants(
@@ -86,11 +93,7 @@ def test_image_size_variants(
 @pytest.mark.costly
 @pytest.mark.parametrize(
     "aspect_ratio",
-    [
-        "1:1",
-        "16:9",
-        "9:16",
-    ],
+    _load_variants()["aspect_ratios"],
     ids=lambda value: f"ratio={value}",
 )
 def test_aspect_ratio_variants(
@@ -118,7 +121,7 @@ def test_aspect_ratio_variants(
 @pytest.mark.costly
 @pytest.mark.parametrize(
     "generate_count",
-    [1, 2, 4],
+    _load_variants()["generate_counts"],
     ids=lambda value: f"count={value}",
 )
 def test_generate_count_variants(

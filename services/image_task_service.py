@@ -12,18 +12,18 @@ from utils.assertions import (
     assert_image_response,
     parse_json,
 )
+from utils.enums import TaskStatus
 
 
 class ImageTaskService:
-    # 状态枚举：
-    #   0 = 初始状态（任务刚创建）
-    #   1 = 待生成（排队中）
-    #   2 = 生成中
-    #   3 = 生成成功
-    #   4 = 生成失败
-    IN_PROGRESS_STATUSES = {0, 1, 2}
-    SUCCESS_STATUS = 3
-    FAILED_STATUS = 4
+    # 进行中状态集合：0=待提交 1=排队中 2=生成中
+    IN_PROGRESS_STATUSES = {
+        TaskStatus.IN_PROGRESS,
+        TaskStatus.QUEUED,
+        TaskStatus.GENERATING,
+    }
+    SUCCESS_STATUS = TaskStatus.SUCCESS
+    FAILED_STATUS = TaskStatus.FAILED
 
     def __init__(
         self,

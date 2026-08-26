@@ -11,6 +11,8 @@ from Crypto.Cipher import AES, PKCS1_v1_5
 from Crypto.PublicKey import RSA
 from Crypto.Util.Padding import pad
 
+from utils.recorder import record_request, record_response
+
 
 class AuthApi:
     LOGIN_PATH = "/prod-api/auth/login"
@@ -94,9 +96,13 @@ class AuthApi:
             "Accept": "application/json, text/plain, */*",
         }
 
-        return self.session.post(
-            f"{self.base_url}{self.LOGIN_PATH}",
+        url = f"{self.base_url}{self.LOGIN_PATH}"
+        record_request("POST", url, headers, encrypted_body)
+        response = self.session.post(
+            url,
             headers=headers,
             data=json.dumps(encrypted_body),
             timeout=timeout,
         )
+        record_response(response)
+        return response

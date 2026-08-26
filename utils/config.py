@@ -28,6 +28,9 @@ class Settings:
     poll_interval_seconds: int
     task_list_page_size: int
     verify_output_image: bool
+    login_username: str
+    login_password: str
+    rsa_public_key: str
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -49,4 +52,8 @@ class Settings:
                 "VERIFY_OUTPUT_IMAGE",
                 True,
             ),
+            # 自动登录配置（可选）：配置后每次运行自动登录获取最新 Token
+            login_username=os.getenv("LOGIN_USERNAME", "").strip(),
+            login_password=os.getenv("LOGIN_PASSWORD", "").strip(),
+            rsa_public_key=os.getenv("RSA_PUBLIC_KEY", "").strip(),
         )

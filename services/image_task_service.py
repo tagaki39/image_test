@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import time
 from typing import Any
 
 import requests
@@ -15,6 +14,7 @@ from utils.assertions import (
     parse_json,
 )
 from utils.enums import TaskStatus
+from utils.task_poller import TaskPoller
 
 
 class ImageTaskService:
@@ -39,6 +39,16 @@ class ImageTaskService:
         self.timeout_seconds = timeout_seconds
         self.poll_interval_seconds = poll_interval_seconds
         self.verify_output_image = verify_output_image
+        # 通用异步任务轮询器（视频/音频等任务可复用同一组件）
+        self.poller = TaskPoller(
+            fetch_task=self.get_task,
+            success_status=self.SUCCESS_STATUS,
+            failed_status=self.FAILED_STATUS,
+            in_progress_statuses=self.IN_PROGRESS_STATUSES,
+            timeout_seconds=timeout_seconds,
+            poll_interval_seconds=poll_interval_seconds,
+            success_validator=self._assert_success_task,
+        )
 
     def submit(self, payload: dict[str, Any]) -> str:
         response = self.image_api.generate_image(payload)
@@ -79,41 +89,8 @@ class ImageTaskService:
         return task
 
     def wait_until_finished(self, task_id: str) -> dict[str, Any]:
-        deadline = time.monotonic() + self.timeout_seconds
-        last_status: Any = None
-
-        while time.monotonic() < deadline:
-            task = self.get_task(task_id)
-            status = task.get("status")
-            last_status = status
-
-            if status == self.SUCCESS_STATUS:
-                self._assert_success_task(task)
-                return task
-
-            if status == self.FAILED_STATUS:
-                raise AssertionError(
-                    "图片生成失败："
-                    f"taskId={task_id}，"
-                    f"errorMsg={task.get('errorMsg')}"
-                )
-
-            if status in self.IN_PROGRESS_STATUSES:
-                time.sleep(self.poll_interval_seconds)
-                continue
-
-            raise AssertionError(
-                "发现未定义的任务状态："
-                f"taskId={task_id}，"
-                f"status={status!r}"
-            )
-
-        raise AssertionError(
-            "图片生成超时："
-            f"taskId={task_id}，"
-            f"等待超过{self.timeout_seconds}秒，"
-            f"最后状态={last_status!r}"
-        )
+        """轮询直到任务结束，委托通用 TaskPoller。"""
+        return self.poller.wait_until_finished(task_id)
 
     def submit_and_wait(
         self,

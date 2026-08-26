@@ -79,7 +79,7 @@ def test_wait_until_finished_failed_status() -> None:
         [{"id": "1001", "status": 4, "errorMsg": "模型内部错误"}],
         verify_output_image=False,
     )
-    with pytest.raises(AssertionError, match="生成失败") as exc_info:
+    with pytest.raises(AssertionError, match="任务执行失败") as exc_info:
         service.wait_until_finished("1001")
     assert "模型内部错误" in str(exc_info.value)
 

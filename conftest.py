@@ -11,8 +11,10 @@ import requests
 from dotenv import load_dotenv
 
 from api.auth_api import AuthApi
+from api.bill_api import BillApi
 from api.image_api import ImageApi
 from services.auth_service import AuthService
+from services.bill_service import BillService
 from services.image_task_service import ImageTaskService
 from utils.config import Settings
 from utils.http_client import HttpClient
@@ -126,6 +128,20 @@ def http_client(
 @pytest.fixture(scope="session")
 def image_api(http_client: HttpClient) -> ImageApi:
     return ImageApi(http_client=http_client)
+
+
+@pytest.fixture(scope="session")
+def bill_api(http_client: HttpClient) -> BillApi:
+    return BillApi(http_client=http_client)
+
+
+@pytest.fixture(scope="session")
+def bill_service(bill_api: BillApi) -> BillService:
+    return BillService(
+        bill_api=bill_api,
+        timeout_seconds=60,
+        poll_interval_seconds=2,
+    )
 
 
 @pytest.fixture(scope="session")

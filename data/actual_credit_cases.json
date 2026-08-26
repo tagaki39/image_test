@@ -1,0 +1,13 @@
+[
+  {
+    "caseId": "API-ACT-VID-002",
+    "caseName": "Seedance 2.0海外480p视频5秒Token计费",
+    "taskId": "2090411544429801473",
+    "expectedCredits": "31",
+    "businessType": 2,
+    "businessTaskType": 9,
+    "genType": 8,
+    "model": "dreamina-seedance-2-0-260128",
+    "billingUnit": "UNIT_TOKEN"
+  }
+]

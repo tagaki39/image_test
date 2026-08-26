@@ -4,7 +4,7 @@ from typing import Any
 
 import requests
 
-from utils.recorder import record_request, record_response
+from utils.http_client import HttpClient
 
 
 class ImageApi:
@@ -14,22 +14,20 @@ class ImageApi:
 
     def __init__(
         self,
-        session: requests.Session,
-        base_url: str,
+        http_client: HttpClient,
     ) -> None:
-        self.session = session
-        self.base_url = base_url.rstrip("/")
+        self.http_client = http_client
 
     def generate_image(
         self,
         payload: dict[str, Any],
         timeout: int = 30,
     ) -> requests.Response:
-        url = f"{self.base_url}{self.GENERATE_PATH}"
-        record_request("POST", url, self.session.headers, payload)
-        response = self.session.post(url, json=payload, timeout=timeout)
-        record_response(response)
-        return response
+        return self.http_client.post(
+            self.GENERATE_PATH,
+            json_body=payload,
+            timeout=timeout,
+        )
 
     def get_task_detail(
         self,
@@ -37,11 +35,7 @@ class ImageApi:
         timeout: int = 30,
     ) -> requests.Response:
         path = self.TASK_DETAIL_PATH.format(task_id=task_id)
-        url = f"{self.base_url}{path}"
-        record_request("GET", url, self.session.headers)
-        response = self.session.get(url, timeout=timeout)
-        record_response(response)
-        return response
+        return self.http_client.get(path, timeout=timeout)
 
     def list_tasks(
         self,
@@ -52,22 +46,24 @@ class ImageApi:
         timeout: int = 30,
     ) -> requests.Response:
         """历史任务列表接口，仅用于列表功能测试，不用于任务轮询。"""
-        params = {
-            "businessType": business_type,
-            "pageNum": page_num,
-            "pageSize": page_size,
-        }
-        url = f"{self.base_url}{self.TASK_LIST_PATH}"
-        record_request("GET", url, self.session.headers, params)
-        response = self.session.get(url, params=params, timeout=timeout)
-        record_response(response)
-        return response
+        return self.http_client.get(
+            self.TASK_LIST_PATH,
+            params={
+                "businessType": business_type,
+                "pageNum": page_num,
+                "pageSize": page_size,
+            },
+            timeout=timeout,
+        )
 
     @staticmethod
     def get_resource(
         url: str,
         timeout: int = 30,
     ) -> requests.Response:
+        """下载结果图片（CDN，无需鉴权头）。"""
+        from utils.recorder import record_request, record_response
+
         record_request("GET", url)
         response = requests.get(url, timeout=timeout)
         record_response(response)

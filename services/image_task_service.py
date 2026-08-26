@@ -4,8 +4,10 @@ import time
 from typing import Any
 
 import requests
+from pydantic import ValidationError
 
 from api.image_api import ImageApi
+from models.task import TaskDetail
 from utils.assertions import (
     assert_business_success,
     assert_http_ok,
@@ -62,6 +64,14 @@ class ImageTaskService:
             "任务详情data应为对象，"
             f"实际类型：{type(task).__name__}"
         )
+        # Pydantic 模型校验：后端字段类型变化时，收集阶段即失败
+        try:
+            TaskDetail.model_validate(task)
+        except ValidationError as exc:
+            raise AssertionError(
+                f"任务详情字段类型异常：{exc}"
+            ) from exc
+
         assert str(task.get("id")) == str(task_id), (
             "任务详情ID不一致，"
             f"预期={task_id}，实际={task.get('id')}"

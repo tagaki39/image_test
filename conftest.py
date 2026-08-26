@@ -13,6 +13,7 @@ from api.image_api import ImageApi
 from services.auth_service import AuthService
 from services.image_task_service import ImageTaskService
 from utils.config import Settings
+from utils.http_client import HttpClient
 from utils.recorder import clear as clear_recorder
 from utils.recorder import snapshot as recorder_snapshot
 
@@ -58,61 +59,70 @@ def settings() -> Settings:
     return Settings.from_env()
 
 
-@pytest.fixture(scope="session")
-def auth_api(settings: Settings) -> AuthApi:
-    session = requests.Session()
-    return AuthApi(
-        session=session,
+def _build_auth_api(settings: Settings) -> AuthApi:
+    """构造独立登录客户端（不走 401 重试，防递归）。"""
+    http_client = HttpClient(
         base_url=settings.base_url,
+        headers={"clientid": settings.client_id},
+    )
+    return AuthApi(
+        http_client=http_client,
         client_id=settings.client_id,
         public_key_b64=settings.rsa_public_key,
     )
 
 
-@pytest.fixture(scope="session")
-def access_token(
-    settings: Settings,
-    auth_api: AuthApi,
-) -> str:
+def _build_access_token(settings: Settings) -> str:
     """自动登录获取最新 Token；未配置登录信息时回退 .env 静态 Token。"""
     if settings.rsa_public_key and settings.login_username:
-        service = AuthService(auth_api)
-        token = service.login(
+        service = AuthService(_build_auth_api(settings))
+        return service.login(
             username=settings.login_username,
             password=settings.login_password,
         )
-    else:
-        token = settings.authorization.removeprefix("Bearer ").strip()
-    return token
+    return settings.authorization.removeprefix("Bearer ").strip()
 
 
 @pytest.fixture(scope="session")
-def api_session(
+def auth_api(settings: Settings) -> AuthApi:
+    return _build_auth_api(settings)
+
+
+@pytest.fixture(scope="session")
+def access_token(settings: Settings) -> str:
+    """自动登录获取最新 Token；未配置登录信息时回退 .env 静态 Token。"""
+    return _build_access_token(settings)
+
+
+@pytest.fixture(scope="session")
+def http_client(
     settings: Settings,
     access_token: str,
-) -> requests.Session:
-    session = requests.Session()
-    session.headers.update(
-        {
+) -> HttpClient:
+    """统一请求客户端，携带 401 自动重新认证回调。"""
+    def _refresh_token() -> str | None:
+        """401 时自动重新登录一次（仅一次，防死循环）。"""
+        if settings.rsa_public_key and settings.login_username:
+            return _build_access_token(settings)
+        return None
+
+    client = HttpClient(
+        base_url=settings.base_url,
+        headers={
             "Authorization": f"Bearer {access_token}",
             "clientid": settings.client_id,
             "Content-Type": "application/json;charset=UTF-8",
             "Accept": "application/json, text/plain, */*",
-        }
+        },
+        auth_refresh=_refresh_token,
     )
-    yield session
-    session.close()
+    yield client
+    client.session.close()
 
 
 @pytest.fixture(scope="session")
-def image_api(
-    api_session: requests.Session,
-    settings: Settings,
-) -> ImageApi:
-    return ImageApi(
-        session=api_session,
-        base_url=settings.base_url,
-    )
+def image_api(http_client: HttpClient) -> ImageApi:
+    return ImageApi(http_client=http_client)
 
 
 @pytest.fixture(scope="session")

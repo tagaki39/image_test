@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+from pydantic import ValidationError
+
 from api.auth_api import AuthApi
+from models.auth import LoginResponse
 from utils.assertions import (
     assert_business_success,
     assert_http_ok,
@@ -22,17 +25,16 @@ class AuthService:
         result = parse_json(response)
         assert_business_success(result)
 
-        data = result.get("data")
-        assert isinstance(data, dict), (
-            "登录接口返回的data应为对象，"
-            f"实际类型={type(data).__name__}"
-        )
+        try:
+            login_response = LoginResponse.model_validate(result)
+        except ValidationError as exc:
+            raise AssertionError(
+                f"登录响应字段类型异常：{exc}"
+            ) from exc
 
-        access_token = data.get("access_token")
-        assert isinstance(access_token, str), (
-            "登录成功但access_token类型异常，"
-            f"实际类型={type(access_token).__name__}"
+        access_token = login_response.data.access_token if login_response.data else None
+        assert isinstance(access_token, str) and access_token.strip(), (
+            "登录成功但access_token缺失或为空"
         )
-        assert access_token.strip(), "登录成功但access_token为空"
 
         return access_token

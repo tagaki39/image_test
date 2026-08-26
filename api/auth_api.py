@@ -11,7 +11,7 @@ from Crypto.Cipher import AES, PKCS1_v1_5
 from Crypto.PublicKey import RSA
 from Crypto.Util.Padding import pad
 
-from utils.recorder import record_request, record_response
+from utils.http_client import HttpClient
 
 
 class AuthApi:
@@ -19,13 +19,11 @@ class AuthApi:
 
     def __init__(
         self,
-        session: requests.Session,
-        base_url: str,
+        http_client: HttpClient,
         client_id: str,
         public_key_b64: str,
     ) -> None:
-        self.session = session
-        self.base_url = base_url.rstrip("/")
+        self.http_client = http_client
         self.client_id = client_id
         self.public_key_b64 = public_key_b64
 
@@ -96,13 +94,11 @@ class AuthApi:
             "Accept": "application/json, text/plain, */*",
         }
 
-        url = f"{self.base_url}{self.LOGIN_PATH}"
-        record_request("POST", url, headers, encrypted_body)
-        response = self.session.post(
-            url,
+        # 登录接口本身不做 401 重试（防递归）
+        return self.http_client.post(
+            self.LOGIN_PATH,
             headers=headers,
             data=json.dumps(encrypted_body),
             timeout=timeout,
+            retry_auth=False,
         )
-        record_response(response)
-        return response

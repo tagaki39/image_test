@@ -69,10 +69,13 @@ class AuthApi:
         password: str,
         timeout: int = 30,
     ) -> requests.Response:
+        assert self.client_id, "client_id为空，请检查CLIENT_ID环境变量"
+
         payload = {
             "username": username,
             "password": password,
             "clientId": self.client_id,
+            "tenantId": "000000",
             "grantType": "password",
         }
 

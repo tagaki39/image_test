@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import time
 from typing import Any
 
 
@@ -10,9 +11,11 @@ def build_valid_image_payload(
     """
     默认构造图生图请求。
     没有参考图时，可传空字符串，并根据实际前端规则调整genType/inputFile。
+
+    name 带毫秒时间戳，避免重复内容触发后端防重（任务重复提交）。
     """
     return {
-        "name": "pytest图片生成冒烟测试",
+        "name": f"pytest图片生成冒烟测试-{int(time.time() * 1000)}",
         "projectId": "1",
         "categoryId": None,
         "prompt": (

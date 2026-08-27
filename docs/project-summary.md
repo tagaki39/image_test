@@ -1,94 +1,83 @@
 # 项目成果总结
 
-> 用于简历、面试、绩效汇报的直接素材。
+> 用于简历、面试、绩效汇报的直接素材（2026-08 更新）。
 
 ## 一、项目一句话
 
-基于 **pytest + requests** 的图片生成接口自动化测试框架，接入 **Docker 容器化 + Jenkins 持续集成**，实现代码提交后自动构建、自动测试、自动报告的全流程闭环。
+基于 **pytest + requests** 的 AIGC 图片生成接口自动化测试框架，接入 **Docker 容器化 + Jenkins 持续集成 + 自动登录 + 计费积分校验**，实现从登录到账单的全链路自动化回归。
 
 ## 二、技术栈
 
 | 分类 | 技术 |
 |------|------|
-| 测试框架 | Python / pytest / requests / pytest-html / pytest-xdist |
+| 测试框架 | Python / pytest / requests / pytest-html / allure-pytest / pytest-xdist |
+| 数据驱动 | YAML（pyyaml） |
+| 数据校验 | pydantic / decimal |
+| 加密登录 | pycryptodome（AES-256-ECB + RSA PKCS1v1.5） |
 | 容器化 | Docker / Docker Compose / Dockerfile |
-| CI/CD | Jenkins Declarative Pipeline / HTML Publisher / Email Extension |
-| 版本管理 | Git / GitHub |
+| CI/CD | Jenkins Declarative Pipeline / HTML Publisher / Allure |
+| 版本管理 | Git / GitHub（分支管理） |
 | 环境 | Windows + WSL2 / Linux |
 
-## 三、实现的功能
+## 三、已有功能
 
-### 测试框架层
-- 覆盖**鉴权、异常参数、任务提交、异步轮询、结果校验、任务列表、参数变体、状态机单测、失败回调** 9 类场景，共 31 条用例
-- 分层架构：`api`（HTTP 封装）→ `services`（业务逻辑/轮询）→ `tests`（用例断言），fixture 链式注入
-- 异步任务状态机轮询（进行中/成功/失败/未知状态显式处理），超时保护 240s；状态机行为有独立单元测试覆盖（超时/未知状态/失败/成功带错误 4 条）
-- 参数化测试：异常用例数据与代码分离（JSON 驱动）；参数变体（尺寸/比例/数量 3 维度 × 3 取值）pytest 参数化，提交后校验字段回显
-- 异常参数覆盖：空/缺失 prompt、敏感词（赌博/毒品）、非法 model、0/负数/超限/类型错误 count、非法尺寸与比例
-- 鉴权覆盖：无 Token、过期 Token、缺 clientid（兼容 HTTP 200+业务 401 的拒绝形式）
-- 失败回调链路：无效参考图触发任务异步失败，验证轮询能捕获 errorMsg
-- 测试标记体系（smoke / negative / auth / costly / slow），按需选择性执行
+### 1. 核心框架（9 类场景，43 条用例）
+- 分层架构：`api`（HTTP 封装）→ `services`（业务逻辑）→ `tests`（用例断言）+ `models`（Pydantic 校验）+ `utils`（公共组件）
+- fixture 链式注入：`settings → access_token → http_client → image_api/bill_api → services`
+- 测试标记体系（smoke / negative / auth / costly / slow / billing），按需选择性执行
 
-### CI/CD 层
-- **Declarative Pipeline**：Checkout → Build Image → Fast Tests → Full Tests → 报告归档 → 邮件通知
-- 阶段化策略：非生成类用例每次提交自动跑（秒级）；真实 AI 生成用例仅手动触发（省钱）
-- **Docker 容器化**：测试镜像保证环境一致；Jenkins 镜像固化（预装 docker CLI），compose 一键部署
-- 敏感信息管理：Token/凭据全部走 Jenkins Credentials，不入代码库、不落镜像
+### 2. 测试资产（43 条）
+| 套件 | 条数 | 覆盖 |
+|------|:---:|------|
+| 单元测试 | 4 | 状态机（超时/未知状态/失败/成功带错误） |
+| 鉴权 | 3 | 无 Token / 过期 Token / 缺 clientid |
+| 参数变体 | 17 | 尺寸 3、比例 3、数量 3、模型 5、分辨率 2、genType 2 |
+| 异常参数 | 10 | 空/缺失/敏感词/超长 5000 字符/空格/非法格式 |
+| 边界值 | 3 | 0 / 负数 / 超上限 |
+| 冒烟/提交/失败回调/列表 | 4 | 完整生成链路 |
+| 计费 | 2 | 历史账单校验 + E2E 真实计费 |
 
-## 四、关键成果数据
+### 3. 工程化组件
+- **统一 HttpClient**：headers 合并、超时、请求/响应记录、401 自动重新认证（重试一次防死循环）
+- **Token 生命周期管理**：pytest 启动自动登录（AES+RSA 加密对齐前端），Token 过期 → 401 → 自动重新登录 → 重试原请求
+- **通用 TaskPoller**：异步任务轮询组件（图片/视频/音频复用），显式处理进行中/成功/失败/未知状态
+- **Pydantic 响应模型**：后端字段类型变化在收集阶段即失败
+- **失败现场自动保存**：pytest hook 采集请求/响应（Token 脱敏）到 reports/failures/
+- **数据驱动（YAML）**：5 个数据文件，新增用例 = 加数据 + 注释
 
-| 指标 | 数据 |
+### 4. 计费积分校验（billing）
+- BillService 通用计费组件：账单查询 → taskId 精确匹配 → changeVersion 取最新 → 轮询等待账单 → Decimal 精确校验
+- E2E：真实生成任务 → 账单 endCredits == previewCredits > 0，计费字段（model/billingUnit/业务类型）关联校验
+
+### 5. CI/CD
+- Jenkins Declarative Pipeline：Checkout → Build Image → Fast Tests → Full Tests（手动触发）→ 双报告归档（pytest-html + Allure）→ 邮件通知
+- Docker：测试镜像（含 allure）+ Jenkins 固化镜像（预装 docker CLI）+ compose 一键部署
+- 敏感信息：Jenkins Credentials 管理，Token 不入代码库不落镜像
+
+## 四、真实产出（发现的问题）
+
+| 问题 | 说明 |
 |------|------|
-| 用例数 | 31 条（9 类场景） |
-| Fast Tests 耗时 | ~1s（单元+鉴权+列表，无费用） |
-| Full Tests 耗时 | ~90s+（含真实 AI 生成） |
-| 参数变体 | 尺寸 3（512/1024/2048）、比例 3（1:1/16:9/9:16）、数量 3（1/2/4） |
-| 状态机单测 | 超时 / 未知状态 / 失败 / 成功带错误信息（4 条，零费用） |
-| 异常参数 | 11 条（敏感词×2 / 缺失×2 / 边界×3 / 非法格式×2 / 非法模型等） |
-| 鉴权 | 3 条（无 Token / 过期 Token / 缺 clientid） |
-| 流水线阶段 | 5 个（含报告归档） |
-| 报告 | 2 份 HTML 报告，构建侧边栏直接查看 |
-| 发现的问题 | 后端 2 个参数校验缺口（空 prompt、count=0 提交阶段未拦截）；后端防重（相同内容重复提交 500）；鉴权失败返回 HTTP 200+业务 401 |
+| 后端参数校验缺口 ×12 | 空/缺失 prompt、敏感词、超长、0/负/超限 count、非法格式均被提交阶段接受（异步才失败） |
+| gpt-image-2 模型提交 500 | 后端 "pk is null"，参数不匹配（模型未启用或需额外字段） |
+| 鉴权失败返回 HTTP 200+业务 401 | 非标准 HTTP 401 |
+| 后端防重 | 相同内容重复提交返回 500"任务重复提交" |
+| 登录协议 | Body clientId(大写I)+tenantId，Header clientid(小写)，AES+RSA 加密 |
 
-## 五、技术亮点（面试可展开）
+## 五、简历项目描述
 
-1. **异步任务轮询状态机**：显式枚举进行中/成功/失败，未知状态快速失败，避免"挂到超时才发现"
-2. **DinD（Docker-in-Docker）实践**：Jenkins 容器挂载宿主 docker.sock + 静态二进制 CLI，避开复杂嵌套
-3. **报告导出方案选型**：`-v` 挂载源路径被宿主 daemon 解析导致文件丢失 → 改用 `docker cp` + `set +e` 保证失败时报告仍导出
-4. **凭据安全**：敏感值仅存在于 Jenkins Credentials 与 .env（gitignore），镜像构建排除 `.env`
-5. **环境可复现**：固化镜像 + docker-compose，新机器 2 条命令起整套 CI
+> **AIGC 图片生成接口自动化测试框架**（Python + pytest + Docker + Jenkins）
+> - 从零搭建接口自动化框架，覆盖鉴权、异常参数、参数变体、异步任务轮询、失败回调、计费积分校验 9 类场景，43 条用例，YAML 数据驱动
+> - 实现 Token 生命周期管理：AES+RSA 加密自动登录 + 401 自动重新认证机制
+> - 分层架构（API/Service/Model/Utils）+ 统一 HttpClient + 通用异步任务轮询组件 + Pydantic 响应模型
+> - 测试失败自动保存请求/响应现场（Token 脱敏），Allure + pytest-html 双报告
+> - 编写 Dockerfile + Jenkins Declarative Pipeline 实现持续集成，凭据安全管理
+> - 实战发现并记录后端参数校验缺口 12 项、模型兼容性问题等真实缺陷
 
-## 六、踩坑记录（解决问题的真实过程）
+## 六、待办
 
-| # | 问题 | 方案 |
-|---|------|------|
-| 1 | 国内拉取 Docker Hub 镜像慢 | 华为云 SWR 同步源 + 加速器（dockerproxy.net 实测可用） |
-| 2 | WSL2 未装导致 Docker 不可用 | `wsl --install` + 重启 |
-| 3 | Jenkins 版本与插件不兼容（插件要求 ≥2.504，镜像 2.492） | 换 lts-jdk21 镜像（2.516.2） |
-| 4 | 中科大 Jenkins 更新源 404（镜像站 2026 全部下架） | 改回官方 updates.jenkins.io |
-| 5 | 装插件后 Jenkins 停止页面打不开 | `--restart always` 自动拉起 |
-| 6 | publishHTML 缺必填参数 | 补 alwaysLinkToLastBuild / allowMissing |
-| 7 | 容器内无 docker 命令 | 阿里源静态二进制（比 apt 快 18 倍） |
-| 8 | Git Bash 路径转换导致 socket 挂载失效 | MSYS_NO_PATHCONV=1 |
-| 9 | 凭据 ID 自动乱码导致流水线引用失败 | 添加凭据时手动指定 ID |
-| 10 | sh -e 导致测试失败时报告未导出 | set +e 包住 docker run，退出码显式传递 |
-| 11 | 残留容器名冲突 | run 前 docker rm -f 幂等清理 |
-
-完整版见 [jenkins-docker-setup.md](jenkins-docker-setup.md)。
-
-## 七、简历项目描述（可直接使用）
-
-> **图片生成接口自动化测试框架**（Python + pytest + Docker + Jenkins）
->
-> - 基于 pytest + requests 搭建接口自动化框架，覆盖鉴权、异常参数（含敏感词/边界值）、参数变体、异步任务轮询、失败回调 9 类场景，31 条用例；分层架构（api/services/tests）+ fixture 依赖注入 + 参数化数据驱动 + 状态机单元测试
-> - 编写 Dockerfile 容器化测试环境，docker-compose 一键部署 Jenkins，保证环境一致性与可复现性
-> - 编写 Jenkins Declarative Pipeline 实现持续集成：代码提交自动触发快速测试、手动触发全量用例、HTML 报告归档、失败邮件通知
-> - 敏感信息通过 Jenkins Credentials 管理，Token 全程不入代码库
-> - 实战解决镜像加速、插件兼容、容器权限、路径转换等 11 类部署问题，沉淀部署排障文档
-
-## 八、后续可扩展方向
-
-- [ ] 配置邮件通知（SMTP + 真实收件人）
-- [ ] 与后端确认空 prompt / generateImgCount=0 的校验规则（2 条 negative 用例）
-- [ ] GitHub Webhook 接入，实现代码提交自动触发（当前手动触发）
-- [ ] 参数化构建（可选跑哪些标记的用例）
-- [ ] 构建历史保留策略（丢弃旧构建，防磁盘膨胀）
+- [ ] 12 条已知失败用例标记 xfail（构建转绿）
+- [ ] 合并 feat/bill-credits 到 master
+- [ ] Jenkins 凭据同步 LOGIN_* 登录配置
+- [ ] 邮件通知 SMTP 配置
+- [ ] Playwright E2E（登录→生成→页面结果）

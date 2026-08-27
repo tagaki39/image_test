@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import json
+import yaml
 from pathlib import Path
 from typing import Any
 
@@ -11,13 +11,13 @@ from data.payloads import build_valid_image_payload
 from utils.config import Settings
 
 AUTH_CASES_PATH = (
-    Path(__file__).resolve().parents[1] / "data" / "auth_cases.json"
+    Path(__file__).resolve().parents[1] / "data" / "auth_cases.yml"
 )
 
 
 def _load_auth_cases() -> list[dict[str, Any]]:
     with AUTH_CASES_PATH.open("r", encoding="utf-8") as file:
-        return json.load(file)
+        return yaml.safe_load(file)
 
 
 def _assert_auth_rejected(response: requests.Response) -> None:

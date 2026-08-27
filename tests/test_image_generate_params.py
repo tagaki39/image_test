@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import json
+import yaml
 from pathlib import Path
 from typing import Any
 
@@ -18,13 +18,13 @@ from utils.config import Settings
 VALID_CASES_PATH = (
     Path(__file__).resolve().parents[1]
     / "data"
-    / "image_valid_cases.json"
+    / "image_valid_cases.yml"
 )
 
 
 def _load_valid_cases() -> list[dict[str, Any]]:
     with VALID_CASES_PATH.open("r", encoding="utf-8") as file:
-        return json.load(file)
+        return yaml.safe_load(file)
 
 
 @pytest.mark.costly
@@ -65,7 +65,14 @@ def test_image_generate_valid_variants(
     assert isinstance(task, dict), "任务详情data应为对象"
 
     # 逐字段校验回显一致
-    for field in ("imageSize", "aspectRatio", "generateImgCount"):
+    for field in (
+        "model",
+        "imageSize",
+        "aspectRatio",
+        "generateImgCount",
+        "resolution",
+        "genType",
+    ):
         if field in case["changes"]:
             assert task.get(field) == payload[field], (
                 f"{field}回显不一致，请求={payload[field]!r}，"

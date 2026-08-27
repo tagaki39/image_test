@@ -1,0 +1,54 @@
+# 合法参数变体（尺寸/比例/数量/模型/分辨率/genType）
+# 提交后校验任务详情字段回显一致
+- case_name: 尺寸-512x512
+  changes:
+    imageSize: 512x512
+- case_name: 尺寸-1024x1024
+  changes:
+    imageSize: 1024x1024
+- case_name: 尺寸-2048x2048
+  changes:
+    imageSize: 2048x2048
+- case_name: 比例-1:1
+  changes:
+    aspectRatio: '1:1'
+- case_name: 比例-16:9
+  changes:
+    aspectRatio: '16:9'
+- case_name: 比例-9:16
+  changes:
+    aspectRatio: '9:16'
+- case_name: 数量-1张
+  changes:
+    generateImgCount: 1
+- case_name: 数量-2张
+  changes:
+    generateImgCount: 2
+- case_name: 数量-4张
+  changes:
+    generateImgCount: 4
+- case_name: 模型-gpt-image-2
+  changes:
+    model: gpt-image-2
+- case_name: 模型-dola-seedream-5-0-pro
+  changes:
+    model: dola-seedream-5-0-pro-260628
+- case_name: 模型-gemini-3.1-flash-image
+  changes:
+    model: gemini-3.1-flash-image
+- case_name: 模型-seedream-5-0-260128
+  changes:
+    model: seedream-5-0-260128
+- case_name: 分辨率-2K
+  changes:
+    resolution: 2K
+- case_name: 分辨率-4K
+  changes:
+    resolution: 4K
+- case_name: 文生图-genType=1
+  changes:
+    genType: 1
+    inputFile: ''
+- case_name: 图生图-genType=2
+  changes:
+    genType: 2

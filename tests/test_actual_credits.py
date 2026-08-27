@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import json
+import yaml
 from pathlib import Path
 from typing import Any
 
@@ -13,13 +13,13 @@ from utils.config import Settings
 CASES_PATH = (
     Path(__file__).resolve().parents[1]
     / "data"
-    / "actual_credit_cases.json"
+    / "actual_credit_cases.yml"
 )
 
 
 def load_cases() -> list[dict[str, Any]]:
     with CASES_PATH.open("r", encoding="utf-8") as file:
-        return json.load(file)
+        return yaml.safe_load(file)
 
 
 @pytest.mark.billing

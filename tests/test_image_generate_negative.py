@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import copy
-import json
+import yaml
 from pathlib import Path
 from typing import Any
 
@@ -17,7 +17,7 @@ DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 
 def _load_cases(filename: str) -> list[dict[str, Any]]:
     with (DATA_DIR / filename).open("r", encoding="utf-8") as file:
-        return json.load(file)
+        return yaml.safe_load(file)
 
 
 def _submit_invalid_payload(
@@ -55,7 +55,7 @@ def _submit_invalid_payload(
 @pytest.mark.costly
 @pytest.mark.parametrize(
     "case",
-    _load_cases("image_invalid_cases.json"),
+    _load_cases("image_invalid_cases.yml"),
     ids=lambda item: item["case_name"],
 )
 def test_image_generate_invalid_parameters(
@@ -71,7 +71,7 @@ def test_image_generate_invalid_parameters(
 @pytest.mark.costly
 @pytest.mark.parametrize(
     "case",
-    _load_cases("boundary_cases.json"),
+    _load_cases("boundary_cases.yml"),
     ids=lambda item: item["case_name"],
 )
 def test_image_generate_boundary_parameters(

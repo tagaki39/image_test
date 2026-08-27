@@ -1,0 +1,13 @@
+# 边界值用例（0/负数/超上限）
+- case_name: generateImgCount为0（下边界）
+  changes:
+    generateImgCount: 0
+  expected_success: false
+- case_name: generateImgCount为负数
+  changes:
+    generateImgCount: -1
+  expected_success: false
+- case_name: generateImgCount超上限
+  changes:
+    generateImgCount: 100
+  expected_success: false
